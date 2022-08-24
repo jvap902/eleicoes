@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EleitorController;
 use App\Http\Controllers\CandidatoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +18,18 @@ use App\Http\Controllers\CandidatoController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/eleitores', [EleitorController::class, 'index']);
+Route::get('/eleitores/show/{id}', [EleitorController::class, 'show'])->where('id', '[0-9]+');
+Route::get('/eleitores/create', [EleitorController::class, 'create']);
+Route::post('/eleitores/store', [EleitorController::class, 'store']);
+Route::get('/eleitores/edit/{id}', [EleitorController::class, 'edit'])->where('id', '[0-9]+');
+Route::post('/eleitores/update', [EleitorController::class, 'update']);
+Route::get('/eleitores/destroy/{id}', [EleitorController::class, 'destroy'])->where('id', '[0-9]+');
+
+Route::get('/candidatos', [CandidatoController::class, 'index']);
+Route::get('/candidatos/create', [CandidatoController::class, 'create']);
+Route::post('/candidatos/store', [CandidatoController::class, 'store']);
+Route::get('/candidatos/edit/{id}', [CandidatoController::class, 'edit'])->where('id', '[0-9]+');
+Route::post('/candidatos/update', [CandidatoController::class, 'update']);
+Route::get('/candidatos/destroy/{id}', [CandidatoController::class, 'destroy'])->where('id', '[0-9]+');
