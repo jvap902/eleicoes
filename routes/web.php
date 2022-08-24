@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EleitorController;
+use App\Http\Controllers\VotoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,6 @@ Route::post('/eleitores/store', [EleitorController::class, 'store']);
 Route::get('/eleitores/edit/{id}', [EleitorController::class, 'edit'])->where('id', '[0-9]+');
 Route::post('/eleitores/update', [EleitorController::class, 'update']);
 Route::get('/eleitores/destroy/{id}', [EleitorController::class, 'destroy'])->where('id', '[0-9]+');
+
+Route::get('/votos', [VotoController::class, 'index']);
+Route::get('/votos/create', [VotoController::class, 'create']);
