@@ -16,3 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/eleitores', [EleitorController::class, 'index']);
+Route::get('/eleitores/show/{id}', [EleitorController::class, 'show'])->where('id', '[0-9]+');
+Route::get('/eleitores/create', [EleitorController::class, 'create']);
+Route::post('/eleitores/store', [EleitorController::class, 'store']);
+Route::get('/eleitores/edit/{id}', [EleitorController::class, 'edit'])->where('id', '[0-9]+');
+Route::post('/eleitores/update', [EleitorController::class, 'update']);
+Route::get('/eleitores/destroy/{id}', [EleitorController::class, 'destroy'])->where('id', '[0-9]+');
