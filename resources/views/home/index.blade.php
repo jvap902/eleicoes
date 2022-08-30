@@ -1,5 +1,10 @@
 
 
 @extends('base.index')
-    <h1>AAAAAAAAAA</h1>
+<div class="mx-auto" style="width: 40%;">
+
+        <button class="btn">Eleitores</button>
+
+</div>
+
 @section('container')

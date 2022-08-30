@@ -1,8 +1,14 @@
 
 body{
-    /* background: url("https://images.vectorhq.com/images/istock/previews/9468/94684345-abstract-digital-background-using-brazil-flag-colors-a4-format.jpg");
-    background-size: 100% 100%; */
+    background: rgb(34,193,195);
+    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(212,230,101,1) 100%);
+}
 
-    background: -webkit-linear-gradient(left, #fdffa3, #d7ffaf);
 
+.btn{
+    margin-top: 20%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.4);
+    font-size: 22px;
 }
