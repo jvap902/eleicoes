@@ -1,7 +1,7 @@
 @extends('base.index')
 
 @section('container')
-    <form action='/turmas/store' method='post'>
+    <form action='/votos/store' method='post'>
         @include ('components.select', [
             'name' => 'candidato_id', //nome do campo no banco
             'selected' => '',

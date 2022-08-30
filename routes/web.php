@@ -31,6 +31,8 @@ Route::get('/eleitores/destroy/{id}', [EleitorController::class, 'destroy'])->wh
 
 Route::get('/votos', [VotoController::class, 'index']);
 Route::get('/votos/create', [VotoController::class, 'create']);
+Route::post('/votos/store', [VotoController::class, 'store']);
+
 Route::get('/candidatos', [CandidatoController::class, 'index']);
 Route::get('/candidatos/create', [CandidatoController::class, 'create']);
 Route::post('/candidatos/store', [CandidatoController::class, 'store']);
