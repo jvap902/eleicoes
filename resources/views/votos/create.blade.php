@@ -11,5 +11,6 @@
             'sincrono' => true,
         ])
         <a href="/votos" class="btn btn-danger">Voltar</a>
+        @include('components.button', ['type' => 'submit', 'color' => 'success', 'text' => 'Enviar'])
     </form>
 @endsection
