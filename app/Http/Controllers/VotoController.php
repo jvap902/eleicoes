@@ -22,4 +22,14 @@ class VotoController extends Controller
             'candidatos' => $candidatos
         ]);
     }
+
+    function store(Request $request)
+    {
+        $data = $request->all();
+        unset($data['_token']);
+
+        DB::table('votos')->insert($data);
+
+        return redirect('/home');
+    }
 }
