@@ -53,7 +53,7 @@
             'value' => '',
             'onclick' => '',
         ])
-        <a href="/votos" class="btn btn-danger">Voltar</a>
+        <a href="/eleitores" class="btn btn-danger">Voltar</a>
         @include('components.button', ['type' => 'submit', 'color' => 'success', 'text' => 'Continuar'])
         </form>
 @endsection
