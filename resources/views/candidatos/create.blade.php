@@ -8,7 +8,7 @@
             'name' => 'periodo_id',
             'label' => 'Período',
             'id' => 'periodo_id',
-            'sincrono' => false,
+            'sincrono' => true,
             'coisas' => $periodos,
             'selected' => '',
 
@@ -53,15 +53,13 @@
             'onclick' => '',
         ])
 
-        @include('components.field', [
-            'type' => 'text',
+        @include('components.select', [
             'id' => 'cargo',
             'name' => 'cargo',
             'label' => 'Cargo',
-            'class' => 'form-control',
-            'value' => '',
-            'onclick' => '',
-        ])
+            'sincrono' => true,
+            'coisas' => $cargos,
+        ]) {{--Fazer include com as várias options--}}
         <a href="/eleitores" class="btn btn-danger">Voltar</a>
         @include('components.button', ['type' => 'submit', 'color' => 'success', 'text' => 'Continuar'])
         </form>

@@ -26,9 +26,14 @@ class CandidatoController extends Controller
     function create() {
 
         $periodos = DB::table('periodos')->select()->get();
+        $cargos = [
+            ['id' => 1, 'nome' => 'Presidente'],
+            ['id' => 2, 'nome' => 'Governador'],
+        ];
 
         return view('candidatos.create', [
-            'periodos' => $periodos
+            'periodos' => $periodos,
+            'cargos' => $cargos
         ]);
     }
 
