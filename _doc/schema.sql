@@ -40,7 +40,7 @@ create table
     id INT NOT NULL AUTO_INCREMENT,
     data DATE NOT NULL,
     candidato_id INT NOT NULL,
-    eleitor_id INT NOT NULL, /* entra em eleitores para pegar as informacoes de secao e zona */
+    -- eleitor_id INT NOT NULL, /* entra em eleitores para pegar as informacoes de secao e zona */
     FOREIGN KEY (eleitor_id) REFERENCES eleitores(id),
     PRIMARY KEY (id)
   );
