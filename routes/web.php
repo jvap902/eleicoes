@@ -23,7 +23,6 @@ Route::get('/', [HomeController::class, 'index']);
 
 
 Route::get('/eleitores', [EleitorController::class, 'index']);
-Route::get('/eleitores/show/{id}', [EleitorController::class, 'show'])->where('id', '[0-9]+');
 Route::get('/eleitores/create', [EleitorController::class, 'create']);
 Route::post('/eleitores/store', [EleitorController::class, 'store']);
 Route::get('/eleitores/edit/{id}', [EleitorController::class, 'edit'])->where('id', '[0-9]+');
