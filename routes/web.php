@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EleitorController;
 use App\Http\Controllers\VotoController;
 use App\Http\Controllers\CandidatoController;
+use App\Http\Controllers\PeriodoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,10 @@ Route::get('/eleitores/destroy/{id}', [EleitorController::class, 'destroy'])->wh
 Route::get('/votos', [VotoController::class, 'index']);
 Route::get('/votos/create', [VotoController::class, 'create']);
 Route::post('/votos/store', [VotoController::class, 'store']);
+
+Route::get('/periodos', [PeriodoController::class, 'index']);
+Route::get('/periodos/create', [PeriodoController::class, 'create']);
+Route::post('/periodos/store', [PeriodoController::class, 'store']);
 
 Route::get('/candidatos', [CandidatoController::class, 'index']);
 Route::get('/candidatos/create', [CandidatoController::class, 'create']);

@@ -1,8 +1,8 @@
 @extends('base.index')
 
 @section('container')
-    <form action='/votos/store' method='post'>
-        @include ('components.select', [
+    <form action='/periodos/store' method='post'>
+        @include ('components.field', [
             'name' => 'candidato_id', //nome do campo no banco
             'selected' => '',
             'label' => 'Candidato',
