@@ -1,6 +1,6 @@
 @extends('base.index')
 
-@section('container')
-<a class="btn btn-dark d-grid gap-2 col-6 mx-auto my-3" href="/eleitores/create">Novo cadastro</a>
-<a class="btn btn-dark d-grid gap-2 col-6 mx-auto my-3" href="/home/">Voltar</a>
-@endsection
+<div class="mx-auto" style="width: 40%;" id="btns">
+    <a href="/eleitores/create"><button class="btn" id="btn">Novo cadastro</button><a>
+    <a href="/"><button class="btn" id="btn">Voltar</button><a>
+</div>
