@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EleitorController;
 use App\Http\Controllers\VotoController;
 use App\Http\Controllers\CandidatoController;
+use App\Http\Controllers\PeriodoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,7 @@ use App\Http\Controllers\CandidatoController;
 Route::get('/', [HomeController::class, 'index']);
 
 
+
 Route::get('/eleitores', [EleitorController::class, 'index'])->name('index');
 Route::get('/eleitores/show/{id}', [EleitorController::class, 'show'])->where('id', '[0-9]+');
 Route::get('/eleitores/create', [EleitorController::class, 'create']);
@@ -34,6 +36,13 @@ Route::get('/votos/create', [VotoController::class, 'create'])->name('votar')->m
 Route::post('/votos/store', [VotoController::class, 'store']);
 Route::get('/votos/titulo', [VotoController::class, 'titulo']);
 Route::post('/votos/validar', [VotoController::class, 'validar']);
+
+Route::get('/periodos', [PeriodoController::class, 'index']);
+Route::get('/periodos/create', [PeriodoController::class, 'create']);
+Route::post('/periodos/store', [PeriodoController::class, 'store']);
+Route::get('/periodos/edit/{id}', [PeriodoController::class, 'edit'])->where('id', '[0-9]+');
+Route::post('/periodos/update', [PeriodoController::class, 'update']);
+Route::get('/periodos/destroy/{id}', [PeriodoController::class, 'destroy'])->where('id', '[0-9]+');
 
 Route::get('/candidatos', [CandidatoController::class, 'index']);
 Route::get('/candidatos/create', [CandidatoController::class, 'create']);

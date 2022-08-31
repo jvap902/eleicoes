@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +24,12 @@ class CandidatoController extends Controller
     }
 
     function create() {
-        return view('candidatos.create');
+
+        $periodos = DB::table('periodos')->select()->get();
+
+        return view('candidatos.create', [
+            'periodos' => $periodos
+        ]);
     }
 
     function edit($id) {
