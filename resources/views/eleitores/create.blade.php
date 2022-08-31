@@ -1,6 +1,6 @@
 @extends ('base.index')
 
-@section('container')
+<div class="mx-auto" style="width: 40%;" id="create">
     <form action='/eleitores/store' method='POST'>
         <input type='hidden' name='_token' value='{{ csrf_token() }}' />
 
@@ -53,7 +53,7 @@
             'value' => '',
             'onclick' => '',
         ])
-        <a href="/eleitores" class="btn btn-danger">Voltar</a>
         @include('components.button', ['type' => 'submit', 'color' => 'success', 'text' => 'Continuar'])
         </form>
-@endsection
+        <a href="/eleitores" class="btn btn-danger">Voltar</a>
+    </div>

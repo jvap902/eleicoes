@@ -18,6 +18,14 @@ class PeriodoController extends Controller
     }
 
     function create() {
-        
+        return view ('periodos.create');
+    }
+
+    function store(Request $request) {
+        $data = $request->all();
+        unset($data['_token']);
+
+        DB::table('periodos')->insert($data);
+        return redirect('/periodos');
     }
 }
