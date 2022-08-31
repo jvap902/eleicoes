@@ -21,7 +21,7 @@ use App\Http\Controllers\CandidatoController;
 Route::get('/', [HomeController::class, 'index']);
 
 
-Route::get('/eleitores', [EleitorController::class, 'index']);
+Route::get('/eleitores', [EleitorController::class, 'index'])->name('index');
 Route::get('/eleitores/show/{id}', [EleitorController::class, 'show'])->where('id', '[0-9]+');
 Route::get('/eleitores/create', [EleitorController::class, 'create']);
 Route::post('/eleitores/store', [EleitorController::class, 'store']);
@@ -30,8 +30,10 @@ Route::post('/eleitores/update', [EleitorController::class, 'update']);
 Route::get('/eleitores/destroy/{id}', [EleitorController::class, 'destroy'])->where('id', '[0-9]+');
 
 Route::get('/votos', [VotoController::class, 'index']);
-Route::get('/votos/create', [VotoController::class, 'create']);
+Route::get('/votos/create', [VotoController::class, 'create'])->name('votar')->middleware('voto');
 Route::post('/votos/store', [VotoController::class, 'store']);
+Route::get('/votos/titulo', [VotoController::class, 'titulo']);
+Route::post('/votos/validar', [VotoController::class, 'validar']);
 
 Route::get('/candidatos', [CandidatoController::class, 'index']);
 Route::get('/candidatos/create', [CandidatoController::class, 'create']);
