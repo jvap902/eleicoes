@@ -19,7 +19,7 @@ use App\Http\Controllers\PeriodoController;
 */
 
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 
@@ -33,9 +33,10 @@ Route::get('/eleitores/destroy/{id}', [EleitorController::class, 'destroy'])->wh
 
 Route::get('/votos', [VotoController::class, 'index']);
 Route::get('/votos/create', [VotoController::class, 'create'])->name('votar')->middleware('voto');
-Route::post('/votos/store', [VotoController::class, 'store']);
+Route::post('/votos/store', [VotoController::class, 'store'])->middleware('voto');
 Route::get('/votos/titulo', [VotoController::class, 'titulo']);
 Route::post('/votos/validar', [VotoController::class, 'validar']);
+Route::get('/votos/resultados', [VotoController::class, 'resultados']);
 
 Route::get('/periodos', [PeriodoController::class, 'index']);
 Route::get('/periodos/create', [PeriodoController::class, 'create']);

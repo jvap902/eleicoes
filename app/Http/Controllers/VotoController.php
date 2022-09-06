@@ -51,8 +51,9 @@ class VotoController extends Controller
         unset($data['_token']);
 
         DB::table('votos')->insert($data);
+        $request->session()->forget('voto');
 
-        return redirect('/home');
+        return redirect('/');
     }
 
     function titulo(){
@@ -94,7 +95,6 @@ class VotoController extends Controller
                 break;
             }
         }
-
         if(!$valido){
             $erro = "Este título não está cadastrado!";
         }elseif(!$ativo){
@@ -104,5 +104,24 @@ class VotoController extends Controller
         }
         return view('/votos/titulo', ['erro' => $erro]);
 
+    }
+
+    function resultados(){
+        $votos = [];
+        $periodos = DB::table('periodos')->orderby('data_fim', 'DESC')->get();
+        foreach($periodos as $p){
+            $votos[$p->id] = DB::table('votos')
+            ->select('candidatos.nome as nome', DB::raw('count(votos.candidato_id) as votos'))
+            ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+            ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio]])
+            ->groupby('candidatos.nome')
+            ->get();
+
+            // $zonas = DB::table('votos')
+            // ->select('votos.zona')
+            // PEGAR ZONA POR PERIODO 
+        }
+        return view('votos.resultados', ['periodos' => $periodos, 'votos' => $votos]);
+        
     }
 }
