@@ -59,6 +59,8 @@
             'label' => 'Cargo',
             'sincrono' => true,
             'coisas' => $cargos,
+            'array' => true,
+            'selected' => '',
         ]) {{--Fazer include com as várias options--}}
         <a href="/eleitores" class="btn btn-danger">Voltar</a>
         @include('components.button', ['type' => 'submit', 'color' => 'success', 'text' => 'Continuar'])

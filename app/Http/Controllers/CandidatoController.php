@@ -31,6 +31,7 @@ class CandidatoController extends Controller
             ['id' => 2, 'nome' => 'Governador'],
         ];
 
+
         return view('candidatos.create', [
             'periodos' => $periodos,
             'cargos' => $cargos
