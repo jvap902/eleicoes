@@ -1,8 +1,8 @@
 @extends('base.index')
 
 <div class="mx-auto" style="width: 40%;" id="btns">
-<a class="btn btn-dark d-grid gap-2 col-6 mx-auto my-3" href="/candidatos/create">Novo cadastro</a>
-<a class="btn btn-dark d-grid gap-2 col-6 mx-auto my-3" href="/">Voltar</a>
+<a href="/candidatos/create" style="text-decoration:none"><button class="btn d-grid gap-2 col-6 mx-auto" id="btn">Novo cadastro</button><a>
+<a href="/" style="text-decoration:none"><button class="btn d-grid gap-2 col-6 mx-auto" id="btn">Voltar</button><a>
 </div>
 
 <table class="table table-striped my-5">
