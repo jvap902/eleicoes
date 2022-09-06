@@ -19,7 +19,7 @@ class Voto
         if($request->session()->get('voto') == true){
             return $next($request);
         }else{
-            return redirect()->route('index');
+            return redirect()->route('home');
         }
     }
 }
