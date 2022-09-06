@@ -23,7 +23,7 @@
                 <td>{{$candidato->partido}}</td>
                 <td>{{$candidato->numero}}</td>
                 <td>{{$candidato->cargo}}</td>
-                <td>{{$candidato->periodo}}</td>
+                <td>{{$candidato->periodo_id}}</td>
                 <td>
                     <a class="btn btn-secondary" href="/candidatos/edit/{{$candidato->id}}">Editar</a>
                     <a class="btn btn-danger" href="/candidatos/destroy/{{$candidato->id}}">Remover</a>

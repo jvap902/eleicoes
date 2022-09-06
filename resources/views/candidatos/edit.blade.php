@@ -1,8 +1,18 @@
 @extends ('base.index')
 
 @section('container')
-    <form action='/candidatos/store' method='POST'>
+    <form action='/candidatos/update' method='POST'>
         <input type='hidden' name='_token' value='{{ csrf_token() }}' />
+
+        @include('components.field', [
+            'type' => 'hidden',
+            'id' => 'id',
+            'name' => 'id',
+            'label' => '',
+            'class' => 'form-control',
+            'value' => $candidato->id,
+            'onclick' => '',
+        ])
 
         @include('components.select', [
             'name' => 'periodo_id',
@@ -10,7 +20,7 @@
             'id' => 'periodo_id',
             'sincrono' => true,
             'coisas' => $periodos,
-            'selected' => '',
+            'selected' => $candidato->periodo_id,
 
         ])
         
@@ -20,7 +30,7 @@
             'name' => 'nome',
             'label' => 'Nome',
             'class' => 'form-control',
-            'value' => '',
+            'value' => $candidato->nome,
             'onclick' => '',
         ])
 
@@ -30,7 +40,7 @@
             'name' => 'partido',
             'label' => 'Partido',
             'class' => 'form-control',
-            'value' => '',
+            'value' => $candidato->partido,
             'onclick' => '',
         ])
 
@@ -40,7 +50,7 @@
             'name' => 'numero',
             'label' => 'Número',
             'class' => 'form-control',
-            'value' => '',
+            'value' => $candidato->numero,
             'onclick' => '',
         ])
 
@@ -51,7 +61,7 @@
             'sincrono' => true,
             'coisas' => $cargos,
             'array' => true,
-            'selected' => '',
+            'selected' => $candidato->cargo,
         ])
         <a href="/candidatos" class="btn btn-danger">Voltar</a>
         @include('components.button', ['type' => 'submit', 'color' => 'success', 'text' => 'Continuar'])

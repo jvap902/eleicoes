@@ -1,1 +1,1 @@
-<button type="{{ $type }}" class="btn btn-{{ $color }}">{{ $text }}</button>
+<button type="{{ $type }}" class="btn d-grid gap-2 col-6 mx-auto">{{ $text }}</button>

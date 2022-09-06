@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\DB;
 class CandidatoController extends Controller
 {
     function index() {
-        $candidatos = DB::table('candidatos')->select()->get();
-
+        $candidatos = DB::table('candidatos')->join('periodos', 'periodos.id', '=', 'candidatos.periodo_id')->select("candidatos.*", "periodos.id")->get();
         return view('candidatos.index', [
             'candidatos' => $candidatos
         ]);
@@ -18,6 +17,7 @@ class CandidatoController extends Controller
 
     function store(Request $request) {
         $data = $request->all();
+        unset($data['_token']);
         DB::table('candidatos')->insert($data);
 
         return redirect('/candidatos');
@@ -26,11 +26,18 @@ class CandidatoController extends Controller
     function create() {
 
         $periodos = DB::table('periodos')->select()->get();
-        $cargos = [
-            ['id' => 1, 'nome' => 'Presidente'],
-            ['id' => 2, 'nome' => 'Governador'],
-        ];
 
+        $nomes = ['Presidente', 'Governador', 'Senador', 'Deputado Federal', 'Deputado Estadual'];
+        
+        $cargos = [];
+        foreach($nomes as $nome) {
+            $cargo = new \stdClass;
+            $cargo->id = count($cargos) + 1;
+            $cargo->nome = $nome;
+            $cargos[] = $cargo;
+        }
+
+        
 
         return view('candidatos.create', [
             'periodos' => $periodos,
@@ -39,10 +46,23 @@ class CandidatoController extends Controller
     }
 
     function edit($id) {
-        $candidato = DB::table('candidatos')->find($id);
+        $candidato = DB::table('candidatos')->join('periodos', 'periodos.id', '=', 'candidatos.periodo_id')->select("candidatos.*", "periodos.id")->where('candidatos.id', '=', $id); // acho que dá para tirar o periodos.id
+        $periodos = DB::table('periodos')->select()->get();
+
+        $nomes = ['Presidente', 'Governador', 'Senador', 'Deputado Federal', 'Deputado Estadual'];
+        
+        $cargos = [];
+        foreach($nomes as $nome) {
+            $cargo = new \stdClass;
+            $cargo->id = count($cargos) + 1;
+            $cargo->nome = $nome;
+            $cargos[] = $cargo;
+        }
 
         return view('candidatos.edit', [
-            'candidato' => $candidato
+            'candidato' => $candidato,
+            'periodos' => $periodos,
+            'cargos' => $cargos
         ]);
     }
 
