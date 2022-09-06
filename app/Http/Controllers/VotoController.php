@@ -107,24 +107,21 @@ class VotoController extends Controller
     }
 
     function resultados(){
+        $votos = [];
         $periodos = DB::table('periodos')->orderby('data_fim', 'DESC')->get();
         foreach($periodos as $p){
             $votos[$p->id] = DB::table('votos')
-            ->select('candidatos.nome', DB::raw('count(votos.candidato_id)'))
+            ->select('candidatos.nome as nome', DB::raw('count(votos.candidato_id) as votos'))
             ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
             ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio]])
             ->groupby('candidatos.nome')
             ->get();
 
-            // $votosZona[$p->id] = DB::table('votos')
-            // ->select('candidatos.nome', DB::raw('count(votos.candidato_id)'))
-            // ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
-
-            // ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio]])
-            // ->groupby('candidatos.nome')
-            // ->get();
+            // $zonas = DB::table('votos')
+            // ->select('votos.zona')
+            // PEGAR ZONA POR PERIODO 
         }
-        return view('/votos/titulo', ['votos' => $votos]);
+        return view('votos.resultados', ['periodos' => $periodos, 'votos' => $votos]);
         
     }
 }
