@@ -14,6 +14,7 @@
             'class' => 'form-control',
             'value' => $eleitor->nome,
             'onclick' => '',
+            'disabled' => ''
         ])
 
         @include('components.field', [
@@ -24,6 +25,7 @@
             'class' => 'form-control',
             'value' => $eleitor->titulo,
             'onclick' => '',
+            'disabled' => ''
         ])
 
         @include('components.field', [
@@ -34,6 +36,7 @@
             'class' => 'form-control',
             'value' => $eleitor->zona,
             'onclick' => '',
+            'disabled' => ''
         ])
 
         @include('components.field', [
@@ -44,6 +47,7 @@
             'class' => 'form-control',
             'value' => $eleitor->secao,
             'onclick' => '',
+            'disabled' => ''
         ])
         <a href="/eleitores" class="btn btn-danger">Voltar</a>
         @include('components.button', ['type' => 'submit', 'color' => 'success', 'text' => 'Continuar'])

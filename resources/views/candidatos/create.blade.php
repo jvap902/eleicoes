@@ -22,6 +22,7 @@
             'class' => 'form-control',
             'value' => '',
             'onclick' => '',
+            'disabled' => ''
         ])
 
         @include('components.field', [
@@ -32,6 +33,7 @@
             'class' => 'form-control',
             'value' => '',
             'onclick' => '',
+            'disabled' => ''
         ])
 
         @include('components.field', [
@@ -42,6 +44,7 @@
             'class' => 'form-control',
             'value' => '',
             'onclick' => '',
+            'disabled' => ''
         ])
 
         @include('components.select', [

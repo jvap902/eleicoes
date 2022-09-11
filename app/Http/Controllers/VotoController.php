@@ -15,33 +15,26 @@ class VotoController extends Controller
 
     function create()
     {
-        $presidentes = DB::table('candidatos')
-            ->where('cargo', 'presidente')
-            ->select()
-            ->get();
-        $governadores = DB::table('candidatos')
-            ->where('cargo', 'governador')
-            ->select()
-            ->get();
-        $deputados_estaduais = DB::table('candidatos')
-            ->where('cargo', 'deputado_estadual')
-            ->select()
-            ->get();
-        $deputados_federais = DB::table('candidatos')
-            ->where('cargo', 'deputado_federal')
-            ->select()
-            ->get();
-        $senadores = DB::table('candidatos')
-            ->where('cargo', 'senador')
-            ->select()
-            ->get();
+        return view('votos.create');
+    }
 
-        return view('votos.create', [
-            'presidentes' => $presidentes,
-            'governadores' => $governadores,
-            'deputados_estaduais' => $deputados_estaduais,
-            'deputados_federais' => $deputados_federais,
-            'senadores' => $senadores,
+    function confirmar(Request $request)
+    {
+        $data = $request->all();
+        unset($data['_token']);
+
+        $presidente = DB::table('candidatos')->where('numero', $data['presidente'])->get();
+        $governador = DB::table('candidatos')->where('numero', $data['governador'])->get();
+        $senador = DB::table('candidatos')->where('numero', $data['senador'])->get();
+        $deputado_federal = DB::table('candidatos')->where('numero', $data['deputado_federal'])->get();
+        $deputado_estadual = DB::table('candidatos')->where('numero', $data['deputado_estadual'])->get();
+
+        return view('votos.confirmar', [
+            'presidente' => $presidente[0]->nome,
+            'governador' => $governador[0]->nome,
+            'senador' => $senador[0]->nome,
+            'deputado_federal' => $deputado_federal[0]->nome,
+            'deputado_estadual' => $deputado_estadual[0]->nome
         ]);
     }
 

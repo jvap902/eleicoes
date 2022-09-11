@@ -12,6 +12,7 @@
             'class' => 'form-control',
             'value' => $candidato->id,
             'onclick' => '',
+            'disabled' => ''
         ])
 
         @include('components.select', [
@@ -32,6 +33,7 @@
             'class' => 'form-control',
             'value' => $candidato->nome,
             'onclick' => '',
+            'disabled' => ''
         ])
 
         @include('components.field', [
@@ -42,6 +44,7 @@
             'class' => 'form-control',
             'value' => $candidato->partido,
             'onclick' => '',
+            'disabled' => ''
         ])
 
         @include('components.field', [
@@ -52,6 +55,7 @@
             'class' => 'form-control',
             'value' => $candidato->numero,
             'onclick' => '',
+            'disabled' => ''
         ])
 
         @include('components.select', [

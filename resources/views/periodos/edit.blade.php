@@ -14,6 +14,7 @@
             'class' => 'form-control',
             'value' => $periodo->nome,
             'onclick' => '',
+            'disabled' => ''
         ])
 
         @include('components.field', [
@@ -24,6 +25,7 @@
             'class' => 'form-control',
             'value' => $periodo->data_inicio,
             'onclick' => '',
+            'disabled' => ''
         ])
 
         @include('components.field', [
@@ -34,6 +36,7 @@
             'class' => 'form-control',
             'value' => $periodo->data_fim,
             'onclick' => '',
+            'disabled' => ''
         ])
         <a href="/periodos" class="btn btn-danger">Voltar</a>
         @include('components.button', ['type' => 'submit', 'color' => 'success', 'text' => 'Continuar'])

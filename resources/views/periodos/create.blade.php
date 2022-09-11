@@ -11,6 +11,7 @@
             'label' => 'Nome do Período',
             'class' => '',
             'onclick' => '',
+            'disabled' => ''
         ])
         @include ('components.field', [
             'id' => 'data_inicio',
@@ -20,6 +21,7 @@
             'label' => 'Data de início',
             'class' => '',
             'onclick' => '',
+            'disabled' => ''
         ])
         @include ('components.field', [
             'id' => 'data_fim',
@@ -29,6 +31,7 @@
             'label' => 'Data de término',
             'class' => '',
             'onclick' => '',
+            'disabled' => ''
         ])
         @include('components.button', ['type' => 'submit', 'color' => 'success', 'text' => 'Enviar'])
     </form>
