@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class CandidatoController extends Controller
 {
     function index() {
-        $candidatos = DB::table('candidatos')->join('periodos', 'periodos.id', '=', 'candidatos.periodo_id')->select("candidatos.*", "periodos.id")->get();
+        $candidatos = DB::table('candidatos')->select("candidatos.*")->get();
         return view('candidatos.index', [
             'candidatos' => $candidatos
         ]);
@@ -46,7 +46,7 @@ class CandidatoController extends Controller
     }
 
     function edit($id) {
-        $candidato = DB::table('candidatos')->join('periodos', 'periodos.id', '=', 'candidatos.periodo_id')->select("candidatos.*", "periodos.id")->where('candidatos.id', '=', $id); // acho que dá para tirar o periodos.id
+        $candidato = DB::table('candidatos')->find($id);
         $periodos = DB::table('periodos')->select()->get();
 
         $nomes = ['Presidente', 'Governador', 'Senador', 'Deputado Federal', 'Deputado Estadual'];
@@ -68,6 +68,7 @@ class CandidatoController extends Controller
 
     function update(Request $request) {
         $data = $request->all();
+        unset($data['_token']);
         $id = array_shift($data);
 
         DB::table('candidatos')->where('id', $id)->update($data);
@@ -76,7 +77,7 @@ class CandidatoController extends Controller
     }
 
     function destroy($id){
-        DB::table('candidatos')->where('id', $id)->destroy();
+        DB::table('candidatos')->where('id', $id)->delete();
 
         return redirect('/candidatos');
     }

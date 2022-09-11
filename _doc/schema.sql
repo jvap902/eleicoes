@@ -41,7 +41,7 @@ create table
     data DATE NOT NULL,
     candidato_id INT NOT NULL,
     -- eleitor_id INT NOT NULL, /* entra em eleitores para pegar as informacoes de secao e zona */
-    FOREIGN KEY (eleitor_id) REFERENCES eleitores(id),
+    -- FOREIGN KEY (eleitor_id) REFERENCES eleitores(id),
     PRIMARY KEY (id)
   );
 create table
