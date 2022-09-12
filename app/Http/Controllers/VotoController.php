@@ -48,7 +48,7 @@ class VotoController extends Controller
         DB::transaction( function() use (&$data, &$request) {
             
             DB::table('votos')->insert([
-                'data' => Carbon::now()->format('Y-m-d H:i:s'),
+                'data' => Carbon::now()->format('Y-m-d H:i:s'), // ver o format
                 'candidato_id' => $data['presidente_id'],
                 'zona' => $data['zona'],
                 'secao' => $data['secao']
