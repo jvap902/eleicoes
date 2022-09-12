@@ -1,64 +1,151 @@
 @extends('base.index')
 
 <div class="mx-auto" style="width: 40%;" id="create">
-    <form action='/votos/store' method='post'>
-        @csrf
         @include('components.field', [
+            'classe' => 'mb-3',
             'type' => 'text',
             'id' => 'presidente',
             'name' => 'presidente',
             'label' => 'Presidente',
             'class' => 'form-control',
-            'value' => $presidente,
+            'value' => $presidente->nome,
             'onclick' => '',
             'disabled' => 'disabled'
         ])
 
         @include('components.field', [
+            'classe' => 'mb-3',
             'type' => 'text',
             'id' => 'governador',
             'name' => 'governador',
             'label' => 'Governador',
             'class' => 'form-control',
-            'value' => $governador,
+            'value' => $governador->nome,
             'onclick' => '',
             'disabled' => 'disabled'
         ])
 
         @include('components.field', [
+            'classe' => 'mb-3',
             'type' => 'text',
             'id' => 'senador',
             'name' => 'senador',
             'label' => 'Senador',
             'class' => 'form-control',
-            'value' => $senador,
+            'value' => $senador->nome,
             'onclick' => '',
             'disabled' => 'disabled'
         ])
 
         @include('components.field', [
+            'classe' => 'mb-3',
             'type' => 'text',
             'id' => 'deputado_federal',
             'name' => 'deputado_federal',
             'label' => 'Deputado Federal',
             'class' => 'form-control',
-            'value' => $deputado_federal,
+            'value' => $deputado_federal->nome,
             'onclick' => '',
             'disabled' => 'disabled'
         ])
 
         @include('components.field', [
+            'classe' => 'mb-3',
             'type' => 'text',
             'id' => 'deputado_estadual',
             'name' => 'deputado_estadual',
             'label' => 'Deputado Estadual',
             'class' => 'form-control',
-            'value' => $deputado_estadual,
+            'value' => $deputado_estadual->nome,
             'onclick' => '',
             'disabled' => 'disabled'
         ])
+    <form action='/votos/store' method='post'>
+    @csrf
+    @include('components.field', [
+            'classe' => '',
+            'type' => 'hidden',
+            'id' => 'zona',
+            'name' => 'zona',
+            'label' => '',
+            'class' => '',
+            'value' => $zona,
+            'onclick' => '',
+            'disabled' => ''
+    ])
+    @include('components.field', [
+            'classe' => '',
+            'type' => 'hidden',
+            'id' => 'secao',
+            'name' => 'secao',
+            'label' => '',
+            'class' => '',
+            'value' => $secao,
+            'onclick' => '',
+            'disabled' => ''
+        ])
 
-        @include('components.button', ['type' => 'submit', 'color' => 'success', 'text' => 'Confirmar'])
+    @include('components.field', [
+            'classe' => '',
+            'type' => 'hidden',
+            'id' => 'presidente_id',
+            'name' => 'presidente_id',
+            'label' => '',
+            'class' => '',
+            'value' => $presidente->id,
+            'onclick' => '',
+            'disabled' => ''
+        ])
+
+        @include('components.field', [
+            'classe' => '',
+            'type' => 'hidden',
+            'id' => 'governador_id',
+            'name' => 'governador_id',
+            'label' => '',
+            'class' => '',
+            'value' => $governador->id,
+            'onclick' => '',
+            'disabled' => ''
+        ])
+
+        @include('components.field', [
+            'classe' => '',
+            'type' => 'hidden',
+            'id' => 'senador_id',
+            'name' => 'senador_id',
+            'label' => '',
+            'class' => '',
+            'value' => $senador->id,
+            'onclick' => '',
+            'disabled' => ''
+        ])
+
+        @include('components.field', [
+            'classe' => '',
+            'type' => 'hidden',
+            'id' => 'deputado_federal_id',
+            'name' => 'deputado_federal_id',
+            'label' => '',
+            'class' => '',
+            'value' => $deputado_federal->id,
+            'onclick' => '',
+            'disabled' => ''
+        ])
+
+        @include('components.field', [
+            'classe' => '',
+            'type' => 'hidden',
+            'id' => 'deputado_estadual_id',
+            'name' => 'deputado_estadual_id',
+            'label' => '',
+            'class' => '',
+            'value' => $deputado_estadual->id,
+            'onclick' => '',
+            'disabled' => ''
+        ])
+
+        @include('components.button', ['type' => 'submit', 'value' => '','color' => 'success', 'text' => 'Confirmar'])
     </form>
     <a href="/votos/create" class="btn btn-danger">Voltar</a>
 </div>

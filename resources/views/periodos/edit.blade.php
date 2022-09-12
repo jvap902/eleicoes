@@ -7,6 +7,7 @@
 
 
         @include('components.field', [
+            'classe' => 'mb-3',
             'type' => 'text',
             'id' => 'nome',
             'name' => 'nome',
@@ -18,6 +19,7 @@
         ])
 
         @include('components.field', [
+            'classe' => 'mb-3',
             'type' => 'datetime-local',
             'id' => 'data_inicio',
             'name' => 'data_inicio',
@@ -29,6 +31,7 @@
         ])
 
         @include('components.field', [
+            'classe' => 'mb-3',
             'type' => 'datetime-local',
             'id' => 'data_fim',
             'name' => 'data_fim',
@@ -39,6 +42,6 @@
             'disabled' => ''
         ])
         <a href="/periodos" class="btn btn-danger">Voltar</a>
-        @include('components.button', ['type' => 'submit', 'color' => 'success', 'text' => 'Continuar'])
+        @include('components.button', ['type' => 'submit', 'color' => 'success', 'value' => '', 'text' => 'Continuar'])
     </form>
 @endsection

@@ -9,16 +9,17 @@
     <form action='/votos/validar' method='post'>
     <input type='hidden' name='_token' value='{{ csrf_token() }}' />
         @include('components.field', [
+            'classe' => 'mb-3',
             'type' => 'number',
-            'id' => 'presidente',
-            'name' => 'preseidente',
-            'label' => 'Presidente',
+            'id' => 'titulo',
+            'name' => 'titulo',
+            'label' => 'Título',
             'class' => 'form-control',
-            'value' => $voto->presidente,
+            'value' => '',
             'onclick' => '',
             'disabled' => ''
         ])
-        @include('components.button', ['type' => 'submit', 'color' => 'success', 'text' => 'Continuar'])
+        @include('components.button', ['type' => 'submit', 'color' => 'success', 'value' => '', 'text' => 'Continuar'])
     </form>
     <a href="/votos" class="btn btn-danger">Voltar</a>
 </div>

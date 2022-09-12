@@ -15,6 +15,7 @@
         ])
         
         @include('components.field', [
+            'classe' => 'mb-3',
             'type' => 'text',
             'id' => 'nome',
             'name' => 'nome',
@@ -26,6 +27,7 @@
         ])
 
         @include('components.field', [
+            'classe' => 'mb-3',
             'type' => 'text',
             'id' => 'partido',
             'name' => 'partido',
@@ -37,6 +39,7 @@
         ])
 
         @include('components.field', [
+            'classe' => 'mb-3',
             'type' => 'number',
             'id' => 'numero',
             'name' => 'numero',
@@ -57,6 +60,6 @@
             'selected' => '',
         ])
         <a href="/candidatos" class="btn btn-danger">Voltar</a>
-        @include('components.button', ['type' => 'submit', 'color' => 'success', 'text' => 'Continuar'])
+        @include('components.button', ['type' => 'submit', 'color' => 'success', 'value => '', 'text' => 'Continuar'])
         </form>
 @endsection

@@ -30,21 +30,56 @@ class VotoController extends Controller
         $deputado_estadual = DB::table('candidatos')->where('numero', $data['deputado_estadual'])->get();
 
         return view('votos.confirmar', [
-            'presidente' => $presidente[0]->nome,
-            'governador' => $governador[0]->nome,
-            'senador' => $senador[0]->nome,
-            'deputado_federal' => $deputado_federal[0]->nome,
-            'deputado_estadual' => $deputado_estadual[0]->nome
+            'presidente' => $presidente[0],
+            'governador' => $governador[0],
+            'senador' => $senador[0],
+            'deputado_federal' => $deputado_federal[0],
+            'deputado_estadual' => $deputado_estadual[0],
+            'zona' => $data['zona'],
+            'secao' => $data['secao']
         ]);
     }
 
     function store(Request $request)
-    {
+    {   
         $data = $request->all();
         unset($data['_token']);
 
-        DB::table('votos')->insert($data);
-        $request->session()->forget('voto');
+        DB::transaction( function() use (&$data, &$request) {
+            
+            DB::table('votos')->insert([
+                'data' => Carbon::now()->format('Y-m-d H:i:s'),
+                'candidato_id' => $data['presidente_id'],
+                'zona' => $data['zona'],
+                'secao' => $data['secao']
+            ]);
+            DB::table('votos')->insert([
+                'data' => Carbon::now()->format('Y-m-d H:i:s'),
+                'candidato_id' => $data['governador_id'],
+                'zona' => $data['zona'],
+                'secao' => $data['secao']
+            ]);
+            DB::table('votos')->insert([
+                'data' => Carbon::now()->format('Y-m-d H:i:s'),
+                'candidato_id' => $data['senador_id'],
+                'zona' => $data['zona'],
+                'secao' => $data['secao']
+            ]);
+            DB::table('votos')->insert([
+                'data' => Carbon::now()->format('Y-m-d H:i:s'),
+                'candidato_id' => $data['deputado_federal_id'],
+                'zona' => $data['zona'],
+                'secao' => $data['secao']
+            ]);
+            DB::table('votos')->insert([
+                'data' => Carbon::now()->format('Y-m-d H:i:s'),
+                'candidato_id' => $data['deputado_estadual_id'],
+                'zona' => $data['zona'],
+                'secao' => $data['secao']
+            ]);
+            $request->session()->forget('voto');
+
+        });
 
         return redirect('/');
     }
@@ -56,13 +91,18 @@ class VotoController extends Controller
     function validar(Request $request){
         $data = $request->all();
         unset($data['_token']);
+
+        $info = DB::table('eleitores')->where('titulo', $data['titulo'])->get();
+        $zona = $info[0]->zona;
+        $secao = $info[0]->secao;
+
         $titulo = $data['titulo'];
         $valido = $votou = $ativo = false;
         $eleitores = DB::table('eleitores')->get();
         $votantes = DB::table('votantes')->get();
         $periodos = DB::table('periodos')->get();
         $hoje = Carbon::now()->format('Y-m-d H:i:s');
-        $pid = $eid = $erro =null;
+        $pid = $eid = $erro = null;
 
         foreach($eleitores as $e){
             if($e->titulo == $titulo){
@@ -80,7 +120,10 @@ class VotoController extends Controller
                         }
                         if(!$votou){
                             $request->session()->put('voto',  true);
-                            return redirect('/votos/create');
+                            return view('/votos/create', [
+                                "zona" => $zona,
+                                "secao" => $secao
+                            ]);
                         }
                         break;
                     }

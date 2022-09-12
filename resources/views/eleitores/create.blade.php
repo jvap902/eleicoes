@@ -5,6 +5,7 @@
         <input type='hidden' name='_token' value='{{ csrf_token() }}' />
 
         @include('components.field', [
+            'classe' => '',
             'type' => 'hidden',
             'id' => 'id',
             'name' => 'id',
@@ -16,6 +17,7 @@
         ])
 
         @include('components.field', [
+            'classe' => 'mb-3',
             'type' => 'text',
             'id' => 'nome',
             'name' => 'nome',
@@ -27,6 +29,7 @@
         ])
 
         @include('components.field', [
+            'classe' => 'mb-3',
             'type' => 'number',
             'id' => 'titulo',
             'name' => 'titulo',
@@ -38,6 +41,7 @@
         ])
 
         @include('components.field', [
+            'classe' => 'mb-3',
             'type' => 'number',
             'id' => 'zona',
             'name' => 'zona',
@@ -49,6 +53,7 @@
         ])
 
         @include('components.field', [
+            'classe' => 'mb-3',
             'type' => 'number',
             'id' => 'secao',
             'name' => 'secao',
@@ -58,7 +63,7 @@
             'onclick' => '',
             'disabled' => ''
         ])
-        @include('components.button', ['type' => 'submit', 'color' => 'success', 'text' => 'Continuar'])
+        @include('components.button', ['type' => 'submit', 'color' => 'success', 'value' => '', 'text' => 'Continuar'])
         </form>
         <a href="/eleitores" class="btn btn-danger">Voltar</a>
     </div>
