@@ -6,6 +6,18 @@
         @include('components.field', [
             'classe' => '',
             'type' => 'hidden',
+            'id' => 'titulo',
+            'name' => 'titulo',
+            'label' => '',
+            'class' => '',
+            'value' => $titulo,
+            'onclick' => '',
+            'disabled' => ''
+        ])
+
+        @include('components.field', [
+            'classe' => '',
+            'type' => 'hidden',
             'id' => 'zona',
             'name' => 'zona',
             'label' => '',

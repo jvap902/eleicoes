@@ -60,6 +60,7 @@ class VotoController extends Controller
         }
 
         return view('votos.confirmar', [
+            'titulo' => $data['titulo'],
             'presidente' => $presidente,
             'governador' => $governador,
             'senador' => $senador,
@@ -72,10 +73,22 @@ class VotoController extends Controller
 
     function store(Request $request)
     {
+
         $data = $request->all();
         unset($data['_token']);
 
-        DB::transaction(function () use (&$data, &$request) {
+        $date = Carbon::now();
+        $date->setTimezone('America/Rosario');
+
+        $eleitor = DB::table('eleitores')->where('titulo', $data['titulo'])->select('id')->first();
+        $periodo = DB::table('periodos')->whereRaw("data_inicio < '$date'")->whereRaw("data_fim > '$date'")->select('id')->first();
+
+        DB::transaction(function () use (&$data, &$request, &$eleitor, &$periodo) {
+
+            DB::table('votantes')->insert([
+                'eleitor_id' => $eleitor->id,
+                'periodo_id' => $periodo->id
+            ]);
 
             if (isset($data['presidente_id'])) {
                 DB::table('votos')->insert([
@@ -168,7 +181,8 @@ class VotoController extends Controller
                             $request->session()->put('voto',  true);
                             return view('/votos/create', [
                                 "zona" => $zona,
-                                "secao" => $secao
+                                "secao" => $secao,
+                                'titulo' => $data['titulo']
                             ]);
                         }
                         break;
