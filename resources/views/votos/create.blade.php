@@ -3,17 +3,6 @@
 <div class="mx-auto" style="width: 40%;" id="create">
     <form action='/votos/confirmar' method='post'>
         @csrf
-        @include('components.field', [
-            'classe' => '',
-            'type' => 'hidden',
-            'id' => 'titulo',
-            'name' => 'titulo',
-            'label' => '',
-            'class' => '',
-            'value' => $titulo,
-            'onclick' => '',
-            'disabled' => ''
-        ])
 
         @include('components.field', [
             'classe' => '',

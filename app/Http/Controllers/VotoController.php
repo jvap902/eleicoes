@@ -60,7 +60,6 @@ class VotoController extends Controller
         }
 
         return view('votos.confirmar', [
-            'titulo' => $data['titulo'],
             'presidente' => $presidente,
             'governador' => $governador,
             'senador' => $senador,
@@ -79,8 +78,9 @@ class VotoController extends Controller
 
         $date = Carbon::now();
         $date->setTimezone('America/Rosario');
+        $titulo = $request->session()->get('titulo');
 
-        $eleitor = DB::table('eleitores')->where('titulo', $data['titulo'])->select('id')->first();
+        $eleitor = DB::table('eleitores')->where('titulo', $titulo)->select('id')->first();
         $periodo = DB::table('periodos')->whereRaw("data_inicio < '$date'")->whereRaw("data_fim > '$date'")->select('id')->first();
 
         DB::transaction(function () use (&$data, &$request, &$eleitor, &$periodo) {
@@ -219,7 +219,7 @@ class VotoController extends Controller
         $ggeral = $gzonas = $gzvotos = $gsecoes = $gsvotos = [];
         $periodos = DB::table('periodos')->orderby('data_fim', 'DESC')->get();
         foreach ($periodos as $p) {
-            // PRESIDENTES 
+            // PRESIDENTES
             $pgeral[$p->id] = DB::table('votos')
                 ->select('candidatos.cargo as cargo', 'candidatos.nome as nome', DB::raw('count(votos.candidato_id) as votos'))
                 ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
@@ -294,7 +294,7 @@ class VotoController extends Controller
                 ->get();
 
         }
-        return view('votos.resultados', ['periodos' => $periodos, 
+        return view('votos.resultados', ['periodos' => $periodos,
         'pgeral' => $pgeral, 'pzonas' => $pzonas, 'pzvotos' => $pzvotos, 'psecoes' => $psecoes, 'psvotos' => $psvotos,
         'ggeral' => $ggeral, 'gzonas' => $gzonas, 'gzvotos' => $gzvotos, 'gsecoes' => $gsecoes, 'gsvotos' => $gsvotos,
         ]);

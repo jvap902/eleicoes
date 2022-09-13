@@ -134,17 +134,6 @@
 
     <form action='/votos/store' method='post'>
         @csrf
-        @include('components.field', [
-            'classe' => '',
-            'type' => 'hidden',
-            'id' => 'titulo',
-            'name' => 'titulo',
-            'label' => '',
-            'class' => '',
-            'value' => $titulo,
-            'onclick' => '',
-            'disabled' => '',
-        ])
 
         @include('components.field', [
             'classe' => '',
@@ -181,18 +170,6 @@
                 'onclick' => '',
                 'disabled' => '',
             ])
-    {{--     @else
-            @include('components.field', [
-                'classe' => '',
-                'type' => 'hidden',
-                'id' => 'presidente_id',
-                'name' => 'presidente_id',
-                'label' => '',
-                'class' => '',
-                'value' => null,
-                'onclick' => '',
-                'disabled' => '',
-            ]) --}}
         @endif
 
         @if (isset($governador->id))
@@ -207,18 +184,6 @@
                 'onclick' => '',
                 'disabled' => '',
             ])
-{{--         @else
-            @include('components.field', [
-                'classe' => '',
-                'type' => 'hidden',
-                'id' => 'governador_id',
-                'name' => 'governador_id',
-                'label' => '',
-                'class' => '',
-                'value' => null,
-                'onclick' => '',
-                'disabled' => '',
-            ]) --}}
         @endif
 
         @if (isset($senador->id))
@@ -233,18 +198,6 @@
                 'onclick' => '',
                 'disabled' => '',
             ])
-{{--         @else
-            @include('components.field', [
-                'classe' => '',
-                'type' => 'hidden',
-                'id' => 'senador_id',
-                'name' => 'senador_id',
-                'label' => '',
-                'class' => '',
-                'value' => null,
-                'onclick' => '',
-                'disabled' => '',
-            ]) --}}
         @endif
 
         @if (isset($deputado_federal->id))
@@ -259,18 +212,6 @@
                 'onclick' => '',
                 'disabled' => '',
             ])
-{{--         @else
-            @include('components.field', [
-                'classe' => '',
-                'type' => 'hidden',
-                'id' => 'deputado_federal_id',
-                'name' => 'deputado_federal_id',
-                'label' => '',
-                'class' => '',
-                'value' => null,
-                'onclick' => '',
-                'disabled' => '',
-            ]) --}}
         @endif
 
         @if (isset($deputado_estadual->id))
@@ -285,18 +226,6 @@
                 'onclick' => '',
                 'disabled' => '',
             ])
-        {{-- @else
-            @include('components.field', [
-                'classe' => '',
-                'type' => 'hidden',
-                'id' => 'deputado_estadual_id',
-                'name' => 'deputado_estadual_id',
-                'label' => '',
-                'class' => '',
-                'value' => null,
-                'onclick' => '',
-                'disabled' => '',
-            ]) --}}
         @endif
 
         @include('components.button', [
