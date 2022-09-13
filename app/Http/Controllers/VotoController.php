@@ -181,6 +181,9 @@ class VotoController extends Controller
                             }
                             if (!$votou) {
                                 $request->session()->put('voto',  true);
+                                $request->session()->put('titulo',  $data['titulo']);
+                                $request->session()->put('zona',  $zona);
+                                $request->session()->put('secao',  $secao);
                                 return view('/votos/create', [
                                     "zona" => $zona,
                                     "secao" => $secao,

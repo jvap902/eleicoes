@@ -1,6 +1,6 @@
 @extends('base.index')
 
-<div class="mx-auto" style="width: 40%;" id="create">
+<div class="mx-auto" style="width: 40%;" id="edit">
     <form action='/periodos/store' method='post'>
         @csrf
         @include ('components.field', [

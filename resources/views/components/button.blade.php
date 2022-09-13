@@ -1,1 +1,1 @@
-<button type="{{ $type }}" value="{{ $value }}"class="btn d-grid gap-2 col-6 mx-auto">{{ $text }}</button>
+<button type="{{ $type }}" value="{{ $value }}" class="btn btn-success">{{ $text }}</button>

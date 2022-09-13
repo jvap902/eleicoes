@@ -10,6 +10,7 @@ class PeriodoController extends Controller
     function index() {
         $periodos = DB::table('periodos')
         ->select()
+        ->orderby('data_inicio', 'DESC')
         ->get();
 
         return view('periodos.index', [
