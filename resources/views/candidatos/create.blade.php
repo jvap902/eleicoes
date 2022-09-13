@@ -60,6 +60,6 @@
             'selected' => '',
         ])
         <a href="/candidatos" class="btn btn-danger">Voltar</a>
-        @include('components.button', ['type' => 'submit', 'color' => 'success', 'value => '', 'text' => 'Continuar'])
+        @include('components.button', ['type' => 'submit', 'color' => 'success', 'value' => '', 'text' => 'Continuar'])
         </form>
 @endsection

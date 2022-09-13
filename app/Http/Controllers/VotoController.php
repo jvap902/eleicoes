@@ -152,53 +152,62 @@ class VotoController extends Controller
         unset($data['_token']);
 
         $info = DB::table('eleitores')->where('titulo', $data['titulo'])->get();
-        $zona = $info[0]->zona;
-        $secao = $info[0]->secao;
 
-        $titulo = $data['titulo'];
-        $valido = $votou = $ativo = false;
-        $eleitores = DB::table('eleitores')->get();
-        $votantes = DB::table('votantes')->get();
-        $periodos = DB::table('periodos')->get();
-        $hoje = Carbon::now()->format('Y-m-d H:i:s');
-        $pid = $eid = $erro = null;
+        if (isset($info[0])) {
+            $zona = $info[0]->zona;
+            $secao = $info[0]->secao;
 
-        foreach ($eleitores as $e) {
-            if ($e->titulo == $titulo) {
-                $eid = $e->id;
-                $valido = true;
-                foreach ($periodos as $p) {
-                    if ($hoje >= $p->data_inicio && $hoje <= $p->data_fim) {
-                        $pid = $p->id;
-                        $ativo = true;
-                        foreach ($votantes as $v) {
-                            if ($pid == $v->periodo_id && $eid == $v->eleitor_id) {
-                                $votou = true;
-                                break;
+            $titulo = $data['titulo'];
+            $valido = $votou = $ativo = false;
+            $eleitores = DB::table('eleitores')->get();
+            $votantes = DB::table('votantes')->get();
+            $periodos = DB::table('periodos')->get();
+            $hoje = Carbon::now()->format('Y-m-d H:i:s');
+            $pid = $eid = $erro = null;
+
+            foreach ($eleitores as $e) {
+                if ($e->titulo == $titulo) {
+                    $eid = $e->id;
+                    $valido = true;
+                    foreach ($periodos as $p) {
+                        if ($hoje >= $p->data_inicio && $hoje <= $p->data_fim) {
+                            $pid = $p->id;
+                            $ativo = true;
+                            foreach ($votantes as $v) {
+                                if ($pid == $v->periodo_id && $eid == $v->eleitor_id) {
+                                    $votou = true;
+                                    break;
+                                }
                             }
+                            if (!$votou) {
+                                $request->session()->put('voto',  true);
+                                return view('/votos/create', [
+                                    "zona" => $zona,
+                                    "secao" => $secao,
+                                    'titulo' => $data['titulo']
+                                ]);
+                            }
+                            break;
                         }
-                        if (!$votou) {
-                            $request->session()->put('voto',  true);
-                            return view('/votos/create', [
-                                "zona" => $zona,
-                                "secao" => $secao,
-                                'titulo' => $data['titulo']
-                            ]);
-                        }
-                        break;
                     }
+                    break;
                 }
-                break;
+            }
+            if (!$valido) {
+                $erro = "Este título não está cadastrado!";
+                return view('/votos/titulo', ['erro' => $erro]);
+            } elseif (!$ativo) {
+                $erro = "Não há nenhum período ativo no momento!";
+                return view('/votos/titulo', ['erro' => $erro]);
+            } elseif ($votou) {
+                $erro = "Não é possível votar mais de uma vez em um período!";
+                return view('/votos/titulo', ['erro' => $erro]);
             }
         }
-        if (!$valido) {
-            $erro = "Este título não está cadastrado!";
-        } elseif (!$ativo) {
-            $erro = "Não há nenhum período ativo no momento!";
-        } elseif ($votou) {
-            $erro = "Não é possível votar mais de uma vez em um período!";
+        else {
+            $erro = "Este título não está cadastrado";
+            return view('/votos/titulo', ['erro' => $erro]);
         }
-        return view('/votos/titulo', ['erro' => $erro]);
     }
 
     function resultados()
