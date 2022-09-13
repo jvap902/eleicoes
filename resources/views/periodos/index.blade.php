@@ -1,9 +1,10 @@
 @extends('base.index')
 
 <div class="mx-auto" style="width: 40%;" id="btns">
-    <a href="/periodos/create" style="text-decoration:none"><button class="btn d-grid gap-2 col-6 mx-auto" id="btn">Novo cadastro</button><a>
-    <a href="/" style="text-decoration:none"><button class="btn d-grid gap-2 col-6 mx-auto" id="btn">Voltar</button><a>
+    <a href="/periodos/create" style="text-decoration:none" class="btn d-grid gap-2 col-6 mx-auto" id="btn">Novo cadastro<a>
 </div>
+
+<div id="tableIndex">
 <table class="table table-striped">
     <thead>
         <tr>
@@ -20,10 +21,16 @@
                 <td>{{$periodo->data_fim}}</td>
                 <td>
                     <a class="btn btn-secondary" href="/periodos/edit/{{$periodo->id}}">Editar</a>
+                </td>
+                <td>
                     <a class="btn btn-danger" href="/periodos/destroy/{{$periodo->id}}">Remover</a>
                 </td>
             </tr>
         @endforeach
     </tbody>
 </table>
+</div>
 
+<div class="mx-auto" style="width: 40%;">
+    <a href="/" style="text-decoration:none" class="btn d-grid gap-2 col-6 mx-auto" id="btn">Voltar<a>
+</div>

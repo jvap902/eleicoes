@@ -1,7 +1,6 @@
 
 body{
-    background: rgb(34,193,195);
-    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(212,230,101,1) 100%);
+    background: #A2C7E5
 }
 
 
@@ -29,4 +28,22 @@ body{
 .btn{
     width: 50%;
     margin-left: 25%;
+}
+
+#resultados{
+    margin-top: 2%;
+    padding: 1% 1% 1% 1%;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.4);
+    font-size: 18px;
+    border-radius: 4%;
+}
+
+#tableIndex{
+    margin: 2% 10%;
+    padding: 1% 1% 1% 1%;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.4);
+    font-size: 18px;
+    border-radius: 4%;
 }
