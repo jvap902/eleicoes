@@ -13,6 +13,11 @@ class PeriodoController extends Controller
         ->orderby('data_inicio', 'DESC')
         ->get();
 
+        // dd()
+        // foreach($periodos as $p){
+            
+        // }
+
         return view('periodos.index', [
             'periodos' => $periodos
         ]);
@@ -25,9 +30,15 @@ class PeriodoController extends Controller
     function store(Request $request) {
         $data = $request->all();
         unset($data['_token']);
+        if($data['nome'] && $data['data_inicio'] && $data['data_fim']){
+            DB::table('periodos')->insert($data);
+            return redirect('/periodos');
+        }else{
+            $erro = "Preencha todos os campos";
+            return view('/periodos/create', ['erro' => $erro]);
+        }
 
-        DB::table('periodos')->insert($data);
-        return redirect('/periodos');
+        
     }
 
     function edit($id){
