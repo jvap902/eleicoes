@@ -5,6 +5,12 @@
     <a href="/" style="text-decoration:none" class="btn d-grid gap-2 col-6 mx-auto" id="btn">Voltar<a>
 </div>
 
+    @if (isset($erro))
+        <div class="alert alert-danger mx-auto" style="width: 40%; margin-top:1%">
+            {{ $erro }}
+        </div>
+    @endif
+
 <div id="tableIndex">
 <table class="table table-striped">
     <thead>

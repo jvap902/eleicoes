@@ -14,11 +14,6 @@ class PeriodoController extends Controller
         ->orderby('data_inicio', 'DESC')
         ->get();
 
-        // dd()
-        // foreach($periodos as $p){
-            
-        // }
-
         return view('periodos.index', [
             'periodos' => $periodos
         ]);
@@ -75,15 +70,13 @@ class PeriodoController extends Controller
     
             return redirect('/periodos');
         }catch(Exception $e){
-            return redirect('/periodos', ['erro' =>$e]);
+            $periodos = DB::table('periodos')
+            ->select()
+            ->orderby('data_inicio', 'DESC')
+            ->get();
+            return view('/periodos.index', ['periodos' => $periodos, 'erro' => "Este período não pode ser excluído."]);
         }
 
     }
 
-    function show($id){
-        $periodo = DB::table('periodos')
-        ->find($id);
-
-        return view('periodos.show', ['periodo' => $periodo]);
-    }
 }
