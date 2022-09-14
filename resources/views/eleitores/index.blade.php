@@ -2,7 +2,15 @@
 
 <div class="mx-auto" style="width: 40%;" id="btns">
     <a href="/eleitores/create" style="text-decoration:none"><button class="btn d-grid gap-2 col-6 mx-auto" id="btn">Novo cadastro</button><a>
+    <a href="/" style="text-decoration:none"><button class="btn d-grid gap-2 col-6 mx-auto" id="btn">Voltar</button><a>
 </div>
+
+@if (isset($erro))
+        <div class="alert alert-danger mx-auto" style="width: 40%; margin-top:1%">
+            {{ $erro }}
+        </div>
+    @endif
+
 <div id="tableIndex">
 <table class="table table-striped my-5">
     <thead>
@@ -33,7 +41,4 @@
 
 </div>
 
-<div class="mx-auto" style="width: 40%;">
-<a href="/" style="text-decoration:none"><button class="btn d-grid gap-2 col-6 mx-auto" id="btn">Voltar</button><a>
-</div>
 
