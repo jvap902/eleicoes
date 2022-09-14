@@ -212,5 +212,6 @@
             'text' => 'Confirmar',
         ])
     </form>
-    <a href="/votos/create" class="btn btn-danger">Voltar</a>
+    <a href="/votos/create->with('key' => $value)" class="btn btn-danger">Voltar</a>
+    {{-- @include('/votos/create')->with('key' => $value) --}}
 </div>
