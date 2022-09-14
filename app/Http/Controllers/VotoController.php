@@ -83,7 +83,9 @@ class VotoController extends Controller
         $eleitor = DB::table('eleitores')->where('titulo', $titulo)->select('id')->first();
         $periodo = DB::table('periodos')->whereRaw("data_inicio < '$date'")->whereRaw("data_fim > '$date'")->select('id')->first();
 
-        DB::transaction(function () use (&$data, &$request, &$eleitor, &$periodo, &$zona, &$secao) {
+        DB::beginTransaction();
+
+        try {
 
             DB::table('votantes')->insert([
                 'eleitor_id' => $eleitor->id,
@@ -136,7 +138,21 @@ class VotoController extends Controller
             }
 
             $request->session()->forget('voto');
-        });
+
+            $confirma = "Voto confirmado!";
+
+            return view('votos.confirmar', [
+                "confirma" => $confirma
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            $erro = "Aconteceu um erro ao processar o seu voto. Tente novamente!";
+
+            return view('votos.confirmar', [
+                "erro" => $erro
+            ]);
+        }
 
         return redirect('/');
     }
