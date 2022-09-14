@@ -139,6 +139,8 @@ class VotoController extends Controller
 
             $request->session()->forget('voto');
 
+            DB::commit();
+
             $confirma = "Voto confirmado!";
 
             return view('votos.confirmar', [
