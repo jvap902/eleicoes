@@ -25,12 +25,21 @@ class EleitorController extends Controller
     function store(Request $request){
         $data = $request->all();
         unset($data['_token']);
+        $titulos = DB::table('eleitores')->select('titulo')->get();
+        if($data['nome'] && $data['titulo'] && $data['zona'] && $data['secao']){
+            foreach($titulos as $t){
+                if($t == $data['titulo']){
+                    return view('/eleitores/create', ['erro' => "Este título já está registrado"]);
+                }
+            }
+            DB::table('eleitores')->insert($data);
 
-        DB::table('eleitores')->insert($data);
+            return redirect('/eleitores');
+        }else{
+            return view('/eleitores/create', ['erro' => "Preencha todos os campos"]);
+        }
 
         
-
-        return redirect('/eleitores');
     }
 
     function edit($id){

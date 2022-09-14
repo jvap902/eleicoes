@@ -1,6 +1,11 @@
 @extends ('base.index')
 
 <div class="mx-auto" style="width: 40%;" id="create">
+@if (isset($erro))
+        <div class="alert alert-danger">
+            {{ $erro }}
+        </div>
+    @endif
     <form action='/eleitores/store' method='POST'>
         @csrf
 
