@@ -1,6 +1,8 @@
 @extends('base.index')
 
-
+<div  class="mx-auto" style="width: 40%;">
+    <a href="/" style="text-decoration:none" class="btn d-grid gap-2 col-6 mx-auto" id="btn">Voltar<a>
+</div>
 
 @foreach($periodos as $k => $p)
     <div class="mx-auto" style="width: 40%;" id="resultados">
@@ -196,11 +198,136 @@
                 </div>
                 </div>
             </div>
-        </div>
 
-        
+            <!-- DEPUTADO FEDERAL  -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingDeputadoF{{$k}}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDeputadoF{{$k}}" aria-expanded="true" aria-controls="collapseDeputadoF{{$k}}">
+                        Deputado Federal
+                    </button>
+                </h2>
+                <div id="collapseDeputadoF{{$k}}" class="accordion-collapse collapse" aria-labelledby="headingDeputadoF{{$k}}" data-bs-parent="#accordionDeputadoF{{$k}}">
+                <div class="accordion-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                            <th>Deputado Federal</th>
+                            <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Resultados gerais<th>
+                            </tr>
+                        @foreach($dfgeral[$p->id] as $dfg)
+                            <tr>
+                                <td>{{$dfg->nome}}</td>
+                                <td>{{$dfg->votos}}</td>
+                            </tr>
+                        @endforeach
+                            <tr>
+                                <th>Resultados por zona<th>
+                                @foreach($dfzonas[$p->id] as $dfz)
+                                    <tr>
+                                        <th>Zona {{$dfz->zona}}</th><th></th>
+                                    </tr>
+                                    @foreach($dfzvotos[$p->id] as $dfzv)
+                                        @if($dfzv->zona == $dfz->zona)
+                                            <tr>
+                                                <td>{{$dfzv->nome}}</td>
+                                                <td>{{$dfzv->votos}}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                @endforeach
+                            </tr>
+                            <tr>
+                                <th>Resultados por seção<th>
+                                @foreach($dfsecoes[$p->id] as $dfs)
+                                    <tr>
+                                        <th>Seção {{$dfs->secao}}</th><th></th>
+                                    </tr>
+                                    @foreach($dfsvotos[$p->id] as $dfsv)
+                                        @if($dfsv->secao == $dfs->secao)
+                                            <tr>
+                                                <td>{{$dfsv->nome}}</td>
+                                                <td>{{$dfsv->votos}}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                @endforeach
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+            <!-- DEPUTADO ESTADUAL  -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingDeputadoE{{$k}}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDeputadoE{{$k}}" aria-expanded="true" aria-controls="collapseDeputadoE{{$k}}">
+                        Deputado Estadual
+                    </button>
+                </h2>
+                <div id="collapseDeputadoE{{$k}}" class="accordion-collapse collapse" aria-labelledby="headingDeputadoE{{$k}}" data-bs-parent="#accordionDeputadoE{{$k}}">
+                <div class="accordion-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                            <th>Deputado Estadual</th>
+                            <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Resultados gerais<th>
+                            </tr>
+                        @foreach($degeral[$p->id] as $deg)
+                            <tr>
+                                <td>{{$deg->nome}}</td>
+                                <td>{{$deg->votos}}</td>
+                            </tr>
+                        @endforeach
+                            <tr>
+                                <th>Resultados por zona<th>
+                                @foreach($dezonas[$p->id] as $dez)
+                                    <tr>
+                                        <th>Zona {{$dez->zona}}</th><th></th>
+                                    </tr>
+                                    @foreach($dezvotos[$p->id] as $dezv)
+                                        @if($dezv->zona == $dez->zona)
+                                            <tr>
+                                                <td>{{$dezv->nome}}</td>
+                                                <td>{{$dezv->votos}}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                @endforeach
+                            </tr>
+                            <tr>
+                                <th>Resultados por seção<th>
+                                @foreach($desecoes[$p->id] as $des)
+                                    <tr>
+                                        <th>Seção {{$des->secao}}</th><th></th>
+                                    </tr>
+                                    @foreach($desvotos[$p->id] as $desv)
+                                        @if($desv->secao == $des->secao)
+                                            <tr>
+                                                <td>{{$desv->nome}}</td>
+                                                <td>{{$desv->votos}}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                @endforeach
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
 @endforeach
 
-
-<!-- <a href="/votos" class="btn btn-danger">Voltar</a> -->

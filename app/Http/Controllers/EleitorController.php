@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Exception;
 
 class EleitorController extends Controller
 {
@@ -55,11 +56,20 @@ class EleitorController extends Controller
     }
 
     function destroy($id){
-        DB::table('eleitores')
-        ->where('id', $id)
-        ->delete();
+        try{
+            DB::table('eleitores')
+            ->where('id', $id)
+            ->delete();
+    
+            return redirect('/eleitores');
+        }catch(Exception $e){
+            $eleitores = DB::table('eleitores')
+            ->select()
+            ->orderby('id', 'DESC')
+            ->get();
+            return view('/eleitores.index', ['eleitores' => $eleitores, 'erro' => "Este eleitor não pode ser excluído."]);
+        }
 
-        return redirect('/eleitores');
     }
 
     function show($id){

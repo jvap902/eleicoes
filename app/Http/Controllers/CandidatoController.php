@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -77,8 +78,20 @@ class CandidatoController extends Controller
     }
 
     function destroy($id){
-        DB::table('candidatos')->where('id', $id)->delete();
+        try{
+            DB::table('candidatos')
+            ->where('id', $id)
+            ->delete();
+    
+            return redirect('/candidatos');
+        }catch(Exception $e){
+            $candidatos = DB::table('candidatos')
+            ->select()
+            ->orderby('numero', 'DESC')
+            ->get();
+            return view('/candidatos.index', ['candidatos' => $candidatos, 'erro' => "Este candidato não pode ser excluído."]);
+        }
 
-        return redirect('/candidatos');
     }
+
 }
