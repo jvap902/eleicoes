@@ -83,7 +83,9 @@ class VotoController extends Controller
         $eleitor = DB::table('eleitores')->where('titulo', $titulo)->select('id')->first();
         $periodo = DB::table('periodos')->whereRaw("data_inicio < '$date'")->whereRaw("data_fim > '$date'")->select('id')->first();
 
-        DB::transaction(function () use (&$data, &$request, &$eleitor, &$periodo, &$zona, &$secao) {
+        DB::beginTransaction();
+
+        try {
 
             DB::table('votantes')->insert([
                 'eleitor_id' => $eleitor->id,
@@ -136,7 +138,21 @@ class VotoController extends Controller
             }
 
             $request->session()->forget('voto');
-        });
+
+            $confirma = "Voto confirmado!";
+
+            return view('votos.confirmar', [
+                "confirma" => $confirma
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            $erro = "Aconteceu um erro ao processar o seu voto. Tente novamente!";
+
+            return view('votos.confirmar', [
+                "erro" => $erro
+            ]);
+        }
 
         return redirect('/');
     }
@@ -207,8 +223,7 @@ class VotoController extends Controller
                 $erro = "Não é possível votar mais de uma vez em um período!";
                 return view('/votos/titulo', ['erro' => $erro]);
             }
-        }
-        else {
+        } else {
             $erro = "Este título não está cadastrado";
             return view('/votos/titulo', ['erro' => $erro]);
         }
@@ -259,12 +274,12 @@ class VotoController extends Controller
 
             // GOVERNADORES
             $ggeral[$p->id] = DB::table('votos')
-            ->select('candidatos.cargo as cargo', 'candidatos.nome as nome', DB::raw('count(votos.candidato_id) as votos'))
-            ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
-            ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 2]])
-            ->groupby('candidatos.nome', 'cargo')
-            ->orderby('votos', 'DESC')
-            ->get();
+                ->select('candidatos.cargo as cargo', 'candidatos.nome as nome', DB::raw('count(votos.candidato_id) as votos'))
+                ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+                ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 2]])
+                ->groupby('candidatos.nome', 'cargo')
+                ->orderby('votos', 'DESC')
+                ->get();
             $gzonas[$p->id] = DB::table('votos')
                 ->select('candidatos.cargo as cargo', 'votos.zona as zona')
                 ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
@@ -293,11 +308,11 @@ class VotoController extends Controller
                 ->groupby('votos.secao', 'candidatos.nome', 'cargo')
                 ->orderby('votos', 'DESC')
                 ->get();
-
         }
-        return view('votos.resultados', ['periodos' => $periodos,
-        'pgeral' => $pgeral, 'pzonas' => $pzonas, 'pzvotos' => $pzvotos, 'psecoes' => $psecoes, 'psvotos' => $psvotos,
-        'ggeral' => $ggeral, 'gzonas' => $gzonas, 'gzvotos' => $gzvotos, 'gsecoes' => $gsecoes, 'gsvotos' => $gsvotos,
+        return view('votos.resultados', [
+            'periodos' => $periodos,
+            'pgeral' => $pgeral, 'pzonas' => $pzonas, 'pzvotos' => $pzvotos, 'psecoes' => $psecoes, 'psvotos' => $psvotos,
+            'ggeral' => $ggeral, 'gzonas' => $gzonas, 'gzvotos' => $gzvotos, 'gsecoes' => $gsecoes, 'gsvotos' => $gsvotos,
         ]);
     }
 }
