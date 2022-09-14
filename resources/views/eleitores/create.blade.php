@@ -2,7 +2,7 @@
 
 <div class="mx-auto" style="width: 40%;" id="create">
     <form action='/eleitores/store' method='POST'>
-        <input type='hidden' name='_token' value='{{ csrf_token() }}' />
+        @csrf
 
         @include('components.field', [
             'classe' => '',
