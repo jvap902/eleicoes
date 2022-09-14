@@ -99,12 +99,26 @@ class VotoController extends Controller
                     'zona' => $zona,
                     'secao' => $secao
                 ]);
+            } else {
+                DB::table('votos')->insert([
+                    'data' => Carbon::now()->format('Y-m-d H:i:s'), // ver o format
+                    'candidato_id' => 1,
+                    'zona' => $zona,
+                    'secao' => $secao
+                ]);
             }
 
             if (isset($data['governador_id'])) {
                 DB::table('votos')->insert([
                     'data' => Carbon::now()->format('Y-m-d H:i:s'),
                     'candidato_id' => $data['governador_id'],
+                    'zona' => $zona,
+                    'secao' => $secao
+                ]);
+            } else {
+                DB::table('votos')->insert([
+                    'data' => Carbon::now()->format('Y-m-d H:i:s'), // ver o format
+                    'candidato_id' => 1,
                     'zona' => $zona,
                     'secao' => $secao
                 ]);
@@ -117,6 +131,13 @@ class VotoController extends Controller
                     'zona' => $zona,
                     'secao' => $secao
                 ]);
+            } else {
+                DB::table('votos')->insert([
+                    'data' => Carbon::now()->format('Y-m-d H:i:s'), // ver o format
+                    'candidato_id' => 1,
+                    'zona' => $zona,
+                    'secao' => $secao
+                ]);
             }
 
             if (isset($data['deputado_federal_id'])) {
@@ -126,12 +147,26 @@ class VotoController extends Controller
                     'zona' => $zona,
                     'secao' => $secao
                 ]);
+            } else {
+                DB::table('votos')->insert([
+                    'data' => Carbon::now()->format('Y-m-d H:i:s'), // ver o format
+                    'candidato_id' => 1,
+                    'zona' => $zona,
+                    'secao' => $secao
+                ]);
             }
 
             if (isset($data['deputado_estadual_id'])) {
                 DB::table('votos')->insert([
                     'data' => Carbon::now()->format('Y-m-d H:i:s'),
                     'candidato_id' => $data['deputado_estadual_id'],
+                    'zona' => $zona,
+                    'secao' => $secao
+                ]);
+            } else {
+                DB::table('votos')->insert([
+                    'data' => Carbon::now()->format('Y-m-d H:i:s'), // ver o format
+                    'candidato_id' => 1,
                     'zona' => $zona,
                     'secao' => $secao
                 ]);
