@@ -219,6 +219,8 @@ class VotoController extends Controller
         $pgeral = $pzonas = $pzvotos = $psecoes = $psvotos = [];
         $ggeral = $gzonas = $gzvotos = $gsecoes = $gsvotos = [];
         $sgeral = $szonas = $szvotos = $ssecoes = $ssvotos = [];
+        $dfgeral = $dfzonas = $dfzvotos = $dfsecoes = $dfsvotos = [];
+        $degeral = $dezonas = $dezvotos = $desecoes = $desvotos = [];
         $periodos = DB::table('periodos')->orderby('data_fim', 'DESC')->get();
         foreach ($periodos as $p) {
             // PRESIDENTES
@@ -332,11 +334,87 @@ class VotoController extends Controller
                 ->orderby('votos', 'DESC')
                 ->get();
 
+            // DEPUTADO FEDERAL
+            $dfgeral[$p->id] = DB::table('votos')
+            ->select('candidatos.cargo as cargo', 'candidatos.nome as nome', DB::raw('count(votos.candidato_id) as votos'))
+            ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+            ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 4]])
+            ->groupby('candidatos.nome', 'cargo')
+            ->orderby('votos', 'DESC')
+            ->get();
+            $dfzonas[$p->id] = DB::table('votos')
+                ->select('candidatos.cargo as cargo', 'votos.zona as zona')
+                ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+                ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 4]])
+                ->groupby('zona', 'cargo')
+                ->orderby('zona', 'ASC')
+                ->get();
+            $dfzvotos[$p->id] = DB::table('votos')
+                ->select('votos.zona as zona', 'candidatos.nome as nome', DB::raw('count(votos.candidato_id) as votos'))
+                ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+                ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 4]])
+                ->groupby('votos.zona', 'candidatos.nome', 'cargo')
+                ->orderby('votos', 'DESC')
+                ->get();
+            $dfsecoes[$p->id] = DB::table('votos')
+                ->select('candidatos.cargo as cargo', 'votos.secao as secao')
+                ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+                ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 4]])
+                ->groupby('secao', 'cargo')
+                ->orderby('secao', 'ASC')
+                ->get();
+            $dfsvotos[$p->id] = DB::table('votos')
+                ->select('votos.secao as secao', 'candidatos.nome as nome', DB::raw('count(votos.candidato_id) as votos'))
+                ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+                ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 4]])
+                ->groupby('votos.secao', 'candidatos.nome', 'cargo')
+                ->orderby('votos', 'DESC')
+                ->get();
+
+            // DEPUTADO ESTADUAL
+            $degeral[$p->id] = DB::table('votos')
+            ->select('candidatos.cargo as cargo', 'candidatos.nome as nome', DB::raw('count(votos.candidato_id) as votos'))
+            ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+            ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 5]])
+            ->groupby('candidatos.nome', 'cargo')
+            ->orderby('votos', 'DESC')
+            ->get();
+            $dezonas[$p->id] = DB::table('votos')
+                ->select('candidatos.cargo as cargo', 'votos.zona as zona')
+                ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+                ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 5]])
+                ->groupby('zona', 'cargo')
+                ->orderby('zona', 'ASC')
+                ->get();
+            $dezvotos[$p->id] = DB::table('votos')
+                ->select('votos.zona as zona', 'candidatos.nome as nome', DB::raw('count(votos.candidato_id) as votos'))
+                ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+                ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 5]])
+                ->groupby('votos.zona', 'candidatos.nome', 'cargo')
+                ->orderby('votos', 'DESC')
+                ->get();
+            $desecoes[$p->id] = DB::table('votos')
+                ->select('candidatos.cargo as cargo', 'votos.secao as secao')
+                ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+                ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 5]])
+                ->groupby('secao', 'cargo')
+                ->orderby('secao', 'ASC')
+                ->get();
+            $desvotos[$p->id] = DB::table('votos')
+                ->select('votos.secao as secao', 'candidatos.nome as nome', DB::raw('count(votos.candidato_id) as votos'))
+                ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+                ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 5]])
+                ->groupby('votos.secao', 'candidatos.nome', 'cargo')
+                ->orderby('votos', 'DESC')
+                ->get();
+
         }
         return view('votos.resultados', ['periodos' => $periodos,
         'pgeral' => $pgeral, 'pzonas' => $pzonas, 'pzvotos' => $pzvotos, 'psecoes' => $psecoes, 'psvotos' => $psvotos,
         'ggeral' => $ggeral, 'gzonas' => $gzonas, 'gzvotos' => $gzvotos, 'gsecoes' => $gsecoes, 'gsvotos' => $gsvotos,
         'sgeral' => $sgeral, 'szonas' => $szonas, 'szvotos' => $szvotos, 'ssecoes' => $ssecoes, 'ssvotos' => $ssvotos,
+        'dfgeral' => $dfgeral, 'dfzonas' => $dfzonas, 'dfzvotos' => $dfzvotos, 'dfsecoes' => $dfsecoes, 'dfsvotos' => $dfsvotos,
+        'degeral' => $degeral, 'dezonas' => $dezonas, 'dezvotos' => $dezvotos, 'desecoes' => $desecoes, 'desvotos' => $desvotos
         ]);
     }
 }
