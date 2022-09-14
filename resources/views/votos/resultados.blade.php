@@ -2,19 +2,19 @@
 
 
 
-@foreach($periodos as $p)
+@foreach($periodos as $k => $p)
     <div class="mx-auto" style="width: 40%;" id="resultados">
         <p>{{$p->nome}}</p>
 
-        <div class="accordion" id="accordionResultados">
+        <div class="accordion" id="accordionResultados{{$k}}">
             <!-- PRESIDENTE  -->
             <div class="accordion-item">
-                <h2 class="accordion-header" id="headingPresidente">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePresidente" aria-expanded="true" aria-controls="collapsePresidente">
+                <h2 class="accordion-header" id="headingPresidente{{$k}}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePresidente{{$k}}" aria-expanded="true" aria-controls="collapsePresidente{{$k}}">
                         Presidente
                     </button>
                 </h2>
-                <div id="collapsePresidente" class="accordion-collapse collapse" aria-labelledby="headingPresidente" data-bs-parent="#accordionPresidente">
+                <div id="collapsePresidente{{$k}}" class="accordion-collapse collapse" aria-labelledby="headingPresidente{{$k}}" data-bs-parent="#accordionPresidente{{$k}}">
                 <div class="accordion-body">
                     <table class="table table-hover">
                         <thead>
@@ -72,12 +72,12 @@
             </div>
             <!-- GOVERNADOR  -->
             <div class="accordion-item">
-                <h2 class="accordion-header" id="headingGovernador">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGovernador" aria-expanded="true" aria-controls="collapseGovernador">
+                <h2 class="accordion-header" id="headingGovernador{{$k}}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGovernador{{$k}}" aria-expanded="true" aria-controls="collapseGovernador{{$k}}">
                         Governador
                     </button>
                 </h2>
-                <div id="collapseGovernador" class="accordion-collapse collapse" aria-labelledby="headingGovernador" data-bs-parent="#accordionGovernador">
+                <div id="collapseGovernador{{$k}}" class="accordion-collapse collapse" aria-labelledby="headingGovernador{{$k}}" data-bs-parent="#accordionGovernador{{$k}}">
                 <div class="accordion-body">
                     <table class="table table-hover">
                         <thead>
