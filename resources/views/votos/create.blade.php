@@ -5,30 +5,6 @@
         @csrf
 
         @include('components.field', [
-            'classe' => '',
-            'type' => 'hidden',
-            'id' => 'zona',
-            'name' => 'zona',
-            'label' => '',
-            'class' => '',
-            'value' => $zona,
-            'onclick' => '',
-            'disabled' => ''
-        ])
-
-        @include('components.field', [
-            'classe' => '',
-            'type' => 'hidden',
-            'id' => 'secao',
-            'name' => 'secao',
-            'label' => '',
-            'class' => '',
-            'value' => $secao,
-            'onclick' => '',
-            'disabled' => ''
-        ])
-
-        @include('components.field', [
             'classe' => 'mb-3',
             'type' => 'number',
             'id' => 'presidente',

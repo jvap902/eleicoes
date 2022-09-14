@@ -2,6 +2,16 @@
 
 <div class="mx-auto" style="width: 40%;" id="create">
 
+    @if (isset($confirma))
+        <div class="alert alert-success">
+            {{ $confirma }}
+        </div>
+    @elseif(isset($erro))
+        <div class="alert alert-danger">
+            {{ $erro }}
+        </div>
+    @endif
+
     @if (isset($presidente->nome))
         @include('components.field', [
             'classe' => 'mb-3',
@@ -134,29 +144,6 @@
 
     <form action='/votos/store' method='post'>
         @csrf
-
-        @include('components.field', [
-            'classe' => '',
-            'type' => 'hidden',
-            'id' => 'zona',
-            'name' => 'zona',
-            'label' => '',
-            'class' => '',
-            'value' => $zona,
-            'onclick' => '',
-            'disabled' => '',
-        ])
-        @include('components.field', [
-            'classe' => '',
-            'type' => 'hidden',
-            'id' => 'secao',
-            'name' => 'secao',
-            'label' => '',
-            'class' => '',
-            'value' => $secao,
-            'onclick' => '',
-            'disabled' => '',
-        ])
 
         @if (isset($presidente->id))
             @include('components.field', [

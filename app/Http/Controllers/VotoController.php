@@ -65,8 +65,6 @@ class VotoController extends Controller
             'senador' => $senador,
             'deputado_federal' => $deputado_federal,
             'deputado_estadual' => $deputado_estadual,
-            'zona' => $data['zona'],
-            'secao' => $data['secao']
         ]);
     }
 
@@ -79,11 +77,13 @@ class VotoController extends Controller
         $date = Carbon::now();
         $date->setTimezone('America/Rosario');
         $titulo = $request->session()->get('titulo');
+        $zona = $request->session()->get('zona');
+        $secao = $request->session()->get('secao');
 
         $eleitor = DB::table('eleitores')->where('titulo', $titulo)->select('id')->first();
         $periodo = DB::table('periodos')->whereRaw("data_inicio < '$date'")->whereRaw("data_fim > '$date'")->select('id')->first();
 
-        DB::transaction(function () use (&$data, &$request, &$eleitor, &$periodo) {
+        DB::transaction(function () use (&$data, &$request, &$eleitor, &$periodo, &$zona, &$secao) {
 
             DB::table('votantes')->insert([
                 'eleitor_id' => $eleitor->id,
@@ -94,8 +94,8 @@ class VotoController extends Controller
                 DB::table('votos')->insert([
                     'data' => Carbon::now()->format('Y-m-d H:i:s'), // ver o format
                     'candidato_id' => $data['presidente_id'],
-                    'zona' => $data['zona'],
-                    'secao' => $data['secao']
+                    'zona' => $zona,
+                    'secao' => $secao
                 ]);
             }
 
@@ -103,8 +103,8 @@ class VotoController extends Controller
                 DB::table('votos')->insert([
                     'data' => Carbon::now()->format('Y-m-d H:i:s'),
                     'candidato_id' => $data['governador_id'],
-                    'zona' => $data['zona'],
-                    'secao' => $data['secao']
+                    'zona' => $zona,
+                    'secao' => $secao
                 ]);
             }
 
@@ -112,8 +112,8 @@ class VotoController extends Controller
                 DB::table('votos')->insert([
                     'data' => Carbon::now()->format('Y-m-d H:i:s'),
                     'candidato_id' => $data['senador_id'],
-                    'zona' => $data['zona'],
-                    'secao' => $data['secao']
+                    'zona' => $zona,
+                    'secao' => $secao
                 ]);
             }
 
@@ -121,8 +121,8 @@ class VotoController extends Controller
                 DB::table('votos')->insert([
                     'data' => Carbon::now()->format('Y-m-d H:i:s'),
                     'candidato_id' => $data['deputado_federal_id'],
-                    'zona' => $data['zona'],
-                    'secao' => $data['secao']
+                    'zona' => $zona,
+                    'secao' => $secao
                 ]);
             }
 
@@ -130,8 +130,8 @@ class VotoController extends Controller
                 DB::table('votos')->insert([
                     'data' => Carbon::now()->format('Y-m-d H:i:s'),
                     'candidato_id' => $data['deputado_estadual_id'],
-                    'zona' => $data['zona'],
-                    'secao' => $data['secao']
+                    'zona' => $zona,
+                    'secao' => $secao
                 ]);
             }
 
@@ -140,6 +140,7 @@ class VotoController extends Controller
 
         return redirect('/');
     }
+
 
     function titulo()
     {
