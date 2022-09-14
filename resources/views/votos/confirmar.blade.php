@@ -222,6 +222,6 @@
             'text' => 'Confirmar',
         ])
     </form>
-    <a href="/votos/create->with('key' => $value)" class="btn btn-danger">Voltar</a>
-    {{-- @include('/votos/create')->with('key' => $value) --}}
+
+    <button class="btn btn-danger" onclick="history.back()">Voltar</button>
 </div>
