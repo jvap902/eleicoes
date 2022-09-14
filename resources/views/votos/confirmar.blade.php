@@ -1,8 +1,6 @@
 @extends('base.index')
 
-<div class="mx-auto" style="width: 40%;" id="create">
-
-    @if (isset($confirma))
+@if (isset($confirma))
         <div class="alert alert-success">
             {{ $confirma }}
         </div>
@@ -11,6 +9,7 @@
             {{ $erro }}
         </div>
     @else
+<div class="mx-auto" style="width: 40%;" id="create">
 
         @if (isset($presidente->nome))
             @include('components.field', [
