@@ -207,8 +207,7 @@ class VotoController extends Controller
                 $erro = "Não é possível votar mais de uma vez em um período!";
                 return view('/votos/titulo', ['erro' => $erro]);
             }
-        }
-        else {
+        } else {
             $erro = "Este título não está cadastrado";
             return view('/votos/titulo', ['erro' => $erro]);
         }
@@ -260,12 +259,12 @@ class VotoController extends Controller
 
             // GOVERNADORES
             $ggeral[$p->id] = DB::table('votos')
-            ->select('candidatos.cargo as cargo', 'candidatos.nome as nome', DB::raw('count(votos.candidato_id) as votos'))
-            ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
-            ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 2]])
-            ->groupby('candidatos.nome', 'cargo')
-            ->orderby('votos', 'DESC')
-            ->get();
+                ->select('candidatos.cargo as cargo', 'candidatos.nome as nome', DB::raw('count(votos.candidato_id) as votos'))
+                ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+                ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 2]])
+                ->groupby('candidatos.nome', 'cargo')
+                ->orderby('votos', 'DESC')
+                ->get();
             $gzonas[$p->id] = DB::table('votos')
                 ->select('candidatos.cargo as cargo', 'votos.zona as zona')
                 ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')

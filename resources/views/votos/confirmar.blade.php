@@ -222,5 +222,6 @@
             'text' => 'Confirmar',
         ])
     </form>
-    <a href="/votos/create" class="btn btn-danger">Voltar</a>
+
+    <button class="btn btn-danger" onclick="history.back()">Voltar</button>
 </div>
