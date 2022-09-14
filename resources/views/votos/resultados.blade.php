@@ -2,19 +2,19 @@
 
 
 
-@foreach($periodos as $p)
+@foreach($periodos as $k => $p)
     <div class="mx-auto" style="width: 40%;" id="resultados">
         <p>{{$p->nome}}</p>
 
-        <div class="accordion" id="accordionResultados">
+        <div class="accordion" id="accordionResultados{{$k}}">
             <!-- PRESIDENTE  -->
             <div class="accordion-item">
-                <h2 class="accordion-header" id="headingPresidente">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePresidente" aria-expanded="true" aria-controls="collapsePresidente">
+                <h2 class="accordion-header" id="headingPresidente{{$k}}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePresidente{{$k}}" aria-expanded="true" aria-controls="collapsePresidente{{$k}}">
                         Presidente
                     </button>
                 </h2>
-                <div id="collapsePresidente" class="accordion-collapse collapse" aria-labelledby="headingPresidente" data-bs-parent="#accordionPresidente">
+                <div id="collapsePresidente{{$k}}" class="accordion-collapse collapse" aria-labelledby="headingPresidente{{$k}}" data-bs-parent="#accordionPresidente{{$k}}">
                 <div class="accordion-body">
                     <table class="table table-hover">
                         <thead>
@@ -72,12 +72,12 @@
             </div>
             <!-- GOVERNADOR  -->
             <div class="accordion-item">
-                <h2 class="accordion-header" id="headingGovernador">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGovernador" aria-expanded="true" aria-controls="collapseGovernador">
+                <h2 class="accordion-header" id="headingGovernador{{$k}}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGovernador{{$k}}" aria-expanded="true" aria-controls="collapseGovernador{{$k}}">
                         Governador
                     </button>
                 </h2>
-                <div id="collapseGovernador" class="accordion-collapse collapse" aria-labelledby="headingGovernador" data-bs-parent="#accordionGovernador">
+                <div id="collapseGovernador{{$k}}" class="accordion-collapse collapse" aria-labelledby="headingGovernador{{$k}}" data-bs-parent="#accordionGovernador{{$k}}">
                 <div class="accordion-body">
                     <table class="table table-hover">
                         <thead>
@@ -123,6 +123,69 @@
                                             <tr>
                                                 <td>{{$gsv->nome}}</td>
                                                 <td>{{$gsv->votos}}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                @endforeach
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+            <!-- SENADOR  -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSenador{{$k}}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSenador{{$k}}" aria-expanded="true" aria-controls="collapseSenador{{$k}}">
+                        Senador
+                    </button>
+                </h2>
+                <div id="collapseSenador{{$k}}" class="accordion-collapse collapse" aria-labelledby="headingSenador{{$k}}" data-bs-parent="#accordionSenador{{$k}}">
+                <div class="accordion-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                            <th>Senador</th>
+                            <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Resultados gerais<th>
+                            </tr>
+                        @foreach($sgeral[$p->id] as $sg)
+                            <tr>
+                                <td>{{$sg->nome}}</td>
+                                <td>{{$sg->votos}}</td>
+                            </tr>
+                        @endforeach
+                            <tr>
+                                <th>Resultados por zona<th>
+                                @foreach($szonas[$p->id] as $sz)
+                                    <tr>
+                                        <th>Zona {{$sz->zona}}</th><th></th>
+                                    </tr>
+                                    @foreach($szvotos[$p->id] as $szv)
+                                        @if($szv->zona == $sz->zona)
+                                            <tr>
+                                                <td>{{$szv->nome}}</td>
+                                                <td>{{$szv->votos}}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                @endforeach
+                            </tr>
+                            <tr>
+                                <th>Resultados por seção<th>
+                                @foreach($ssecoes[$p->id] as $ss)
+                                    <tr>
+                                        <th>Seção {{$ss->secao}}</th><th></th>
+                                    </tr>
+                                    @foreach($ssvotos[$p->id] as $ssv)
+                                        @if($ssv->secao == $ss->secao)
+                                            <tr>
+                                                <td>{{$ssv->nome}}</td>
+                                                <td>{{$ssv->votos}}</td>
                                             </tr>
                                         @endif
                                     @endforeach

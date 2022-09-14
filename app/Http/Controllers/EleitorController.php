@@ -27,6 +27,8 @@ class EleitorController extends Controller
 
         DB::table('eleitores')->insert($data);
 
+        
+
         return redirect('/eleitores');
     }
 

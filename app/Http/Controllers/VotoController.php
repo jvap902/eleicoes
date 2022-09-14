@@ -233,6 +233,7 @@ class VotoController extends Controller
     {
         $pgeral = $pzonas = $pzvotos = $psecoes = $psvotos = [];
         $ggeral = $gzonas = $gzvotos = $gsecoes = $gsvotos = [];
+        $sgeral = $szonas = $szvotos = $ssecoes = $ssvotos = [];
         $periodos = DB::table('periodos')->orderby('data_fim', 'DESC')->get();
         foreach ($periodos as $p) {
             // PRESIDENTES
@@ -308,11 +309,49 @@ class VotoController extends Controller
                 ->groupby('votos.secao', 'candidatos.nome', 'cargo')
                 ->orderby('votos', 'DESC')
                 ->get();
+
+            // SENADORES
+            $sgeral[$p->id] = DB::table('votos')
+            ->select('candidatos.cargo as cargo', 'candidatos.nome as nome', DB::raw('count(votos.candidato_id) as votos'))
+            ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+            ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 3]])
+            ->groupby('candidatos.nome', 'cargo')
+            ->orderby('votos', 'DESC')
+            ->get();
+            $szonas[$p->id] = DB::table('votos')
+                ->select('candidatos.cargo as cargo', 'votos.zona as zona')
+                ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+                ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 3]])
+                ->groupby('zona', 'cargo')
+                ->orderby('zona', 'ASC')
+                ->get();
+            $szvotos[$p->id] = DB::table('votos')
+                ->select('votos.zona as zona', 'candidatos.nome as nome', DB::raw('count(votos.candidato_id) as votos'))
+                ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+                ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 3]])
+                ->groupby('votos.zona', 'candidatos.nome', 'cargo')
+                ->orderby('votos', 'DESC')
+                ->get();
+            $ssecoes[$p->id] = DB::table('votos')
+                ->select('candidatos.cargo as cargo', 'votos.secao as secao')
+                ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+                ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 3]])
+                ->groupby('secao', 'cargo')
+                ->orderby('secao', 'ASC')
+                ->get();
+            $ssvotos[$p->id] = DB::table('votos')
+                ->select('votos.secao as secao', 'candidatos.nome as nome', DB::raw('count(votos.candidato_id) as votos'))
+                ->leftjoin('candidatos', 'votos.candidato_id', '=', 'candidatos.id')
+                ->where([['votos.data', '<=', $p->data_fim], ['votos.data', '>=', $p->data_inicio], ['cargo', '=', 3]])
+                ->groupby('votos.secao', 'candidatos.nome', 'cargo')
+                ->orderby('votos', 'DESC')
+                ->get();
+
         }
-        return view('votos.resultados', [
-            'periodos' => $periodos,
-            'pgeral' => $pgeral, 'pzonas' => $pzonas, 'pzvotos' => $pzvotos, 'psecoes' => $psecoes, 'psvotos' => $psvotos,
-            'ggeral' => $ggeral, 'gzonas' => $gzonas, 'gzvotos' => $gzvotos, 'gsecoes' => $gsecoes, 'gsvotos' => $gsvotos,
+        return view('votos.resultados', ['periodos' => $periodos,
+        'pgeral' => $pgeral, 'pzonas' => $pzonas, 'pzvotos' => $pzvotos, 'psecoes' => $psecoes, 'psvotos' => $psvotos,
+        'ggeral' => $ggeral, 'gzonas' => $gzonas, 'gzvotos' => $gzvotos, 'gsecoes' => $gsecoes, 'gsvotos' => $gsvotos,
+        'sgeral' => $sgeral, 'szonas' => $szonas, 'szvotos' => $szvotos, 'ssecoes' => $ssecoes, 'ssvotos' => $ssvotos,
         ]);
     }
 }

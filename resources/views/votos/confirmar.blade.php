@@ -32,7 +32,7 @@
             'name' => 'presidente',
             'label' => 'Presidente',
             'class' => 'form-control',
-            'value' => 'nulo',
+            'value' => 'Nulo',
             'onclick' => '',
             'disabled' => 'disabled',
         ])
@@ -58,7 +58,7 @@
             'name' => 'governador',
             'label' => 'Governador',
             'class' => 'form-control',
-            'value' => 'nulo',
+            'value' => 'Nulo',
             'onclick' => '',
             'disabled' => 'disabled',
         ])
@@ -84,7 +84,7 @@
             'name' => 'senador',
             'label' => 'Senador',
             'class' => 'form-control',
-            'value' => 'nulo',
+            'value' => 'Nulo',
             'onclick' => '',
             'disabled' => 'disabled',
         ])
@@ -110,7 +110,7 @@
             'name' => 'deputado_federal',
             'label' => 'Deputado Federal',
             'class' => 'form-control',
-            'value' => 'nulo',
+            'value' => 'Nulo',
             'onclick' => '',
             'disabled' => 'disabled',
         ])
@@ -136,7 +136,7 @@
             'name' => 'deputado_estadual',
             'label' => 'Deputado Estadual',
             'class' => 'form-control',
-            'value' => 'nulo',
+            'value' => 'Nulo',
             'onclick' => '',
             'disabled' => 'disabled',
         ])
@@ -222,5 +222,6 @@
             'text' => 'Confirmar',
         ])
     </form>
-    <a href="/votos/create" class="btn btn-danger">Voltar</a>
+
+    <button class="btn btn-danger" onclick="history.back()">Voltar</button>
 </div>

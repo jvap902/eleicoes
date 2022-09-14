@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,11 +13,6 @@ class PeriodoController extends Controller
         ->select()
         ->orderby('data_inicio', 'DESC')
         ->get();
-
-        // dd()
-        // foreach($periodos as $p){
-            
-        // }
 
         return view('periodos.index', [
             'periodos' => $periodos
@@ -30,15 +26,18 @@ class PeriodoController extends Controller
     function store(Request $request) {
         $data = $request->all();
         unset($data['_token']);
+        $periodos = DB::table('periodos')->get();
         if($data['nome'] && $data['data_inicio'] && $data['data_fim']){
+            foreach ($periodos as $p) {
+                if ($data['data_inicio'] >= $p->data_inicio && $data['data_fim'] <= $p->data_fim) {
+                    return view('/periodos/create', ['erro' => "O período '$p->nome' já abrange estas datas!"]);
+                }
+            }
             DB::table('periodos')->insert($data);
             return redirect('/periodos');
         }else{
-            $erro = "Preencha todos os campos";
-            return view('/periodos/create', ['erro' => $erro]);
+            return view('/periodos/create', ['erro' => "Preencha todos os campos"]);
         }
-
-        
     }
 
     function edit($id){
@@ -64,17 +63,20 @@ class PeriodoController extends Controller
     }
 
     function destroy($id){
-        DB::table('periodos')
-        ->where('id', $id)
-        ->delete();
+        try{
+            DB::table('periodos')
+            ->where('id', $id)
+            ->delete();
+    
+            return redirect('/periodos');
+        }catch(Exception $e){
+            $periodos = DB::table('periodos')
+            ->select()
+            ->orderby('data_inicio', 'DESC')
+            ->get();
+            return view('/periodos.index', ['periodos' => $periodos, 'erro' => "Este período não pode ser excluído."]);
+        }
 
-        return redirect('/periodos');
     }
 
-    function show($id){
-        $periodo = DB::table('periodos')
-        ->find($id);
-
-        return view('periodos.show', ['periodo' => $periodo]);
-    }
 }
