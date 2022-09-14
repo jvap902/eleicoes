@@ -141,6 +141,7 @@ class VotoController extends Controller
         return redirect('/');
     }
 
+
     function titulo()
     {
         return view('votos.titulo');
