@@ -1,6 +1,11 @@
 @extends ('base.index')
 
 <div class="mx-auto" style="width: 40%;" id="edit">
+    @if (isset($erro))
+        <div class="alert alert-danger">
+            {{ $erro }}
+        </div>
+    @endif
     <form action='/candidatos/store' method='POST'>
         @csrf
 
@@ -13,7 +18,7 @@
             'selected' => '',
 
         ])
-        
+
         @include('components.field', [
             'classe' => 'mb-3',
             'type' => 'text',

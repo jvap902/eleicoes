@@ -19,7 +19,7 @@ class CandidatoController extends Controller
                case 4: $c->cargo = "Deputado Federal"; break;
                case 5: $c->cargo = "Deputado Estadual"; break;
            }
-        
+
         }
 
         return view('candidatos.index', [
@@ -28,19 +28,8 @@ class CandidatoController extends Controller
     }
 
     function store(Request $request) {
-        $data = $request->all();
-        unset($data['_token']);
-        DB::table('candidatos')->insert($data);
-
-        return redirect('/candidatos');
-    }
-
-    function create() {
-
         $periodos = DB::table('periodos')->select()->get();
-
         $nomes = ['Presidente', 'Governador', 'Senador', 'Deputado Federal', 'Deputado Estadual'];
-        
         $cargos = [];
         foreach($nomes as $nome) {
             $cargo = new \stdClass;
@@ -48,8 +37,33 @@ class CandidatoController extends Controller
             $cargo->nome = $nome;
             $cargos[] = $cargo;
         }
+        $data = $request->all();
+        unset($data['_token']);
+        $candidatos = DB::table('candidatos')->select('numero', 'periodo_id')->get();
+        if($data['nome'] && $data['periodo_id'] && $data['partido'] && $data['numero']){
+            foreach($candidatos as $c){
+                if($c->numero == $data['numero'] && $c->periodo_id == $data['periodo_id']){
+                    return view('/candidatos/create', ['erro' => "Este número já está cadastrado neste período!",'periodos' => $periodos,'cargos' => $cargos]);
+                }
+            }
+            DB::table('candidatos')->insert($data);
+            return redirect('/candidatos');
+        }else{
+            return view('/candidatos/create', ['erro' => "Preencha todos os campos", 'periodos' => $periodos, 'cargos' => $cargos]);
+        }
+    }
 
-        
+    function create() {
+
+        $periodos = DB::table('periodos')->select()->get();
+        $nomes = ['Presidente', 'Governador', 'Senador', 'Deputado Federal', 'Deputado Estadual'];
+        $cargos = [];
+        foreach($nomes as $nome) {
+            $cargo = new \stdClass;
+            $cargo->id = count($cargos) + 1;
+            $cargo->nome = $nome;
+            $cargos[] = $cargo;
+        }
 
         return view('candidatos.create', [
             'periodos' => $periodos,
@@ -62,7 +76,7 @@ class CandidatoController extends Controller
         $periodos = DB::table('periodos')->select()->get();
 
         $nomes = ['Presidente', 'Governador', 'Senador', 'Deputado Federal', 'Deputado Estadual'];
-        
+
         $cargos = [];
         foreach($nomes as $nome) {
             $cargo = new \stdClass;
@@ -93,7 +107,7 @@ class CandidatoController extends Controller
             DB::table('candidatos')
             ->where('id', $id)
             ->delete();
-    
+
             return redirect('/candidatos');
         }catch(Exception $e){
             $candidatos = DB::table('candidatos')

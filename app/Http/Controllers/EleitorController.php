@@ -28,7 +28,7 @@ class EleitorController extends Controller
         $titulos = DB::table('eleitores')->select('titulo')->get();
         if($data['nome'] && $data['titulo'] && $data['zona'] && $data['secao']){
             foreach($titulos as $t){
-                if($t == $data['titulo']){
+                if($t->titulo == $data['titulo']){
                     return view('/eleitores/create', ['erro' => "Este título já está registrado"]);
                 }
             }
@@ -38,8 +38,6 @@ class EleitorController extends Controller
         }else{
             return view('/eleitores/create', ['erro' => "Preencha todos os campos"]);
         }
-
-        
     }
 
     function edit($id){
@@ -69,7 +67,7 @@ class EleitorController extends Controller
             DB::table('eleitores')
             ->where('id', $id)
             ->delete();
-    
+
             return redirect('/eleitores');
         }catch(Exception $e){
             $eleitores = DB::table('eleitores')
