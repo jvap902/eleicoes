@@ -16,7 +16,7 @@
     onload = async () => {
 
         setTimeout(function() {
-            window.location.href = 'http://127.0.0.1:8000/votos/resultados';
+            window.location.href = 'http://127.0.0.1:8000/votos';
         }, 3000)
     }
 </script>

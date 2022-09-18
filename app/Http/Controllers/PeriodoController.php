@@ -19,8 +19,8 @@ class PeriodoController extends Controller
 
         foreach ($periodos as $periodo) {
 
-            $periodo->data_inicio = Carbon::parse($periodo->data_inicio)->format('d/m/Y h:i');
-            $periodo->data_fim = Carbon::parse($periodo->data_fim)->format('d/m/Y h:i');
+            $periodo->data_inicio = Carbon::parse($periodo->data_inicio)->format('d/m/Y H:i');
+            $periodo->data_fim = Carbon::parse($periodo->data_fim)->format('d/m/Y H:i');
         }
 
 
@@ -52,39 +52,42 @@ class PeriodoController extends Controller
 
             DB::table('candidatos')->insert(
                 array(
-                    'id' => "",
                     'nome' => "Nulo/Branco",
                     'cargo' => 1,
                     'partido' => '',
                     'numero' => 0,
                     'periodo_id' => $periodo_id[0]->id
-                ),
+                )
+            );
+            DB::table('candidatos')->insert(
                 array(
-                    'id' => "",
                     'nome' => "Nulo/Branco",
                     'cargo' => 2,
                     'partido' => '',
                     'numero' => 0,
                     'periodo_id' => $periodo_id[0]->id
-                ),
+                )
+            );
+            DB::table('candidatos')->insert(
                 array(
-                    'id' => "",
                     'nome' => "Nulo/Branco",
                     'cargo' => 3,
                     'partido' => '',
                     'numero' => 0,
                     'periodo_id' => $periodo_id[0]->id
-                ),
+                )
+            );
+            DB::table('candidatos')->insert(
                 array(
-                    'id' => "",
                     'nome' => "Nulo/Branco",
                     'cargo' => 4,
                     'partido' => '',
                     'numero' => 0,
                     'periodo_id' => $periodo_id[0]->id
-                ),
+                )
+            );
+            DB::table('candidatos')->insert(
                 array(
-                    'id' => "",
                     'nome' => "Nulo/Branco",
                     'cargo' => 5,
                     'partido' => '',

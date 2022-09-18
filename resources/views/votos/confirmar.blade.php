@@ -22,7 +22,7 @@
                 'name' => 'presidente',
                 'label' => 'Presidente',
                 'class' => 'form-control',
-                'value' => 'Nulo',
+                'value' => 'Nulo/Branco',
                 'onclick' => '',
                 'disabled' => 'disabled',
             ])
@@ -48,7 +48,7 @@
                 'name' => 'governador',
                 'label' => 'Governador',
                 'class' => 'form-control',
-                'value' => 'Nulo',
+                'value' => 'Nulo/Branco',
                 'onclick' => '',
                 'disabled' => 'disabled',
             ])
@@ -74,7 +74,7 @@
                 'name' => 'senador',
                 'label' => 'Senador',
                 'class' => 'form-control',
-                'value' => 'Nulo',
+                'value' => 'Nulo/Branco',
                 'onclick' => '',
                 'disabled' => 'disabled',
             ])
@@ -100,7 +100,7 @@
                 'name' => 'deputado_federal',
                 'label' => 'Deputado Federal',
                 'class' => 'form-control',
-                'value' => 'Nulo',
+                'value' => 'Nulo/Branco',
                 'onclick' => '',
                 'disabled' => 'disabled',
             ])
@@ -126,7 +126,7 @@
                 'name' => 'deputado_estadual',
                 'label' => 'Deputado Estadual',
                 'class' => 'form-control',
-                'value' => 'Nulo',
+                'value' => 'Nulo/Branco',
                 'onclick' => '',
                 'disabled' => 'disabled',
             ])
@@ -147,6 +147,19 @@
                     'onclick' => '',
                     'disabled' => '',
                 ])
+            @else
+                @include('components.field', [
+                    'classe' => '',
+                    'type' => 'hidden',
+                    'id' => 'presidente_id',
+                    'name' => 'presidente_id',
+                    'label' => '',
+                    'class' => '',
+                    'value' => '0',
+                    'onclick' => '',
+                    'disabled' => 'disabled',
+                ])
+            
             @endif
 
             @if (isset($governador->id))
@@ -160,6 +173,18 @@
                     'value' => $governador->id,
                     'onclick' => '',
                     'disabled' => '',
+                ])
+            @else
+            @include('components.field', [
+                    'classe' => '',
+                    'type' => 'hidden',
+                    'id' => 'governador_id',
+                    'name' => 'governador_id',
+                    'label' => '',
+                    'class' => '',
+                    'value' => '0',
+                    'onclick' => '',
+                    'disabled' => 'disabled',
                 ])
             @endif
 
@@ -175,6 +200,18 @@
                     'onclick' => '',
                     'disabled' => '',
                 ])
+            @else
+                @include('components.field', [
+                    'classe' => '',
+                    'type' => 'hidden',
+                    'id' => 'senador_id',
+                    'name' => 'senador_id',
+                    'label' => '',
+                    'class' => '',
+                    'value' => '0',
+                    'onclick' => '',
+                    'disabled' => 'disabled',
+                ])
             @endif
 
             @if (isset($deputado_federal->id))
@@ -189,6 +226,18 @@
                     'onclick' => '',
                     'disabled' => '',
                 ])
+            @else
+            @include('components.field', [
+                    'classe' => '',
+                    'type' => 'hidden',
+                    'id' => 'deputado_federal_id',
+                    'name' => 'deputado_federal_id',
+                    'label' => '',
+                    'class' => '',
+                    'value' => '0',
+                    'onclick' => '',
+                    'disabled' => 'disabled',
+                ])
             @endif
 
             @if (isset($deputado_estadual->id))
@@ -202,6 +251,18 @@
                     'value' => $deputado_estadual->id,
                     'onclick' => '',
                     'disabled' => '',
+                ])
+            @else
+            @include('components.field', [
+                    'classe' => '',
+                    'type' => 'hidden',
+                    'id' => 'deputado_estadual_id',
+                    'name' => 'deputado_estadual_id',
+                    'label' => '',
+                    'class' => '',
+                    'value' => '0',
+                    'onclick' => '',
+                    'disabled' => 'disabled',
                 ])
             @endif
 
