@@ -37,6 +37,7 @@ Route::post('/votos/store', [VotoController::class, 'store'])->middleware('voto'
 Route::get('/votos/titulo', [VotoController::class, 'titulo']);
 Route::post('/votos/validar', [VotoController::class, 'validar']);
 Route::post('/votos/confirmar', [VotoController::class, 'confirmar']);
+Route::post('/votos/comprovante', [VotoController::class]);
 Route::get('/votos/resultados', [VotoController::class, 'resultados']);
 
 Route::get('/periodos', [PeriodoController::class, 'index']);

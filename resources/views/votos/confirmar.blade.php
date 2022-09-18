@@ -1,14 +1,5 @@
 @extends('base.index')
 
-@if (isset($confirma))
-        <div class="alert alert-success">
-            {{ $confirma }}
-        </div>
-    @elseif(isset($erro))
-        <div class="alert alert-danger">
-            {{ $erro }}
-        </div>
-    @else
 <div class="mx-auto" style="width: 40%;" id="create">
 
         @if (isset($presidente->nome))
@@ -223,5 +214,4 @@
         </form>
 
         <button class="btn btn-danger" onclick="history.back()">Voltar</button>
-    @endif
 </div>

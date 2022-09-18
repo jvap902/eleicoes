@@ -178,7 +178,7 @@ class VotoController extends Controller
 
             $confirma = "Voto confirmado!";
 
-            return view('votos.confirmar', [
+            return view('votos.comprovante', [
                 "confirma" => $confirma
             ]);
         } catch (\Exception $e) {
@@ -186,7 +186,7 @@ class VotoController extends Controller
 
             $erro = "Aconteceu um erro ao processar o seu voto. Tente novamente!";
 
-            return view('votos.confirmar', [
+            return view('votos.comprovante', [
                 "erro" => $erro
             ]);
         }
