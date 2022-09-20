@@ -94,6 +94,7 @@ class VotoController extends Controller
 
         $date = Carbon::now();
         $date->setTimezone('America/Rosario');
+        $date = Carbon::parse($date)->format('Y-m-d H:i:s');
         $titulo = $request->session()->get('titulo');
         $zona = $request->session()->get('zona');
         $secao = $request->session()->get('secao');
@@ -104,7 +105,6 @@ class VotoController extends Controller
         DB::beginTransaction();
 
         try {
-
             DB::table('votantes')->insert([
                 'eleitor_id' => $eleitor->id,
                 'periodo_id' => $periodo->id
@@ -112,14 +112,14 @@ class VotoController extends Controller
 
             if (isset($data['presidente_id'])) {
                 DB::table('votos')->insert([
-                    'data' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'data' => Carbon::now()->setTimezone('America/Rosario')->format('Y-m-d H:i:s'),
                     'candidato_id' => $data['presidente_id'],
                     'zona' => $zona,
                     'secao' => $secao
                 ]);
             } else {
                 DB::table('votos')->insert([
-                    'data' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'data' => Carbon::now()->setTimezone('America/Rosario')->format('Y-m-d H:i:s'),
                     'candidato_id' => 1,
                     'zona' => $zona,
                     'secao' => $secao
@@ -128,14 +128,14 @@ class VotoController extends Controller
 
             if (isset($data['governador_id'])) {
                 DB::table('votos')->insert([
-                    'data' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'data' => Carbon::now()->setTimezone('America/Rosario')->format('Y-m-d H:i:s'),
                     'candidato_id' => $data['governador_id'],
                     'zona' => $zona,
                     'secao' => $secao
                 ]);
             } else {
                 DB::table('votos')->insert([
-                    'data' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'data' => Carbon::now()->setTimezone('America/Rosario')->format('Y-m-d H:i:s'),
                     'candidato_id' => 2,
                     'zona' => $zona,
                     'secao' => $secao
@@ -144,14 +144,14 @@ class VotoController extends Controller
 
             if (isset($data['senador_id'])) {
                 DB::table('votos')->insert([
-                    'data' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'data' => Carbon::now()->setTimezone('America/Rosario')->format('Y-m-d H:i:s'),
                     'candidato_id' => $data['senador_id'],
                     'zona' => $zona,
                     'secao' => $secao
                 ]);
             } else {
                 DB::table('votos')->insert([
-                    'data' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'data' => Carbon::now()->setTimezone('America/Rosario')->format('Y-m-d H:i:s'),
                     'candidato_id' => 3,
                     'zona' => $zona,
                     'secao' => $secao
@@ -160,14 +160,14 @@ class VotoController extends Controller
 
             if (isset($data['deputado_federal_id'])) {
                 DB::table('votos')->insert([
-                    'data' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'data' => Carbon::now()->setTimezone('America/Rosario')->format('Y-m-d H:i:s'),
                     'candidato_id' => $data['deputado_federal_id'],
                     'zona' => $zona,
                     'secao' => $secao
                 ]);
             } else {
                 DB::table('votos')->insert([
-                    'data' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'data' => Carbon::now()->setTimezone('America/Rosario')->format('Y-m-d H:i:s'),
                     'candidato_id' => 4,
                     'zona' => $zona,
                     'secao' => $secao
@@ -176,14 +176,14 @@ class VotoController extends Controller
 
             if (isset($data['deputado_estadual_id'])) {
                 DB::table('votos')->insert([
-                    'data' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'data' => Carbon::now()->setTimezone('America/Rosario')->format('Y-m-d H:i:s'),
                     'candidato_id' => $data['deputado_estadual_id'],
                     'zona' => $zona,
                     'secao' => $secao
                 ]);
             } else {
                 DB::table('votos')->insert([
-                    'data' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'data' => Carbon::now()->setTimezone('America/Rosario')->format('Y-m-d H:i:s'),
                     'candidato_id' => 5,
                     'zona' => $zona,
                     'secao' => $secao
@@ -234,7 +234,8 @@ class VotoController extends Controller
             $eleitores = DB::table('eleitores')->get();
             $votantes = DB::table('votantes')->get();
             $periodos = DB::table('periodos')->get();
-            $hoje = Carbon::now()->format('Y-m-d H:i:s');
+            $hoje = Carbon::now()->setTimezone('America/Rosario');
+            $hoje = Carbon::parse($hoje)->format('Y-m-d H:i:s');
             $pid = $eid = $erro = null;
 
             foreach ($eleitores as $e) {

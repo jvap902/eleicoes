@@ -120,7 +120,7 @@ class PeriodoController extends Controller
         $periodos = DB::table('periodos')->get();
         if ($data['nome'] && $data['data_inicio'] && $data['data_fim']) {
             foreach ($periodos as $p) {
-                if ($data['data_inicio'] >= $p->data_inicio && $data['data_fim'] <= $p->data_fim) {
+                if ($data['data_inicio'] >= $p->data_inicio && $data['data_fim'] <= $p->data_fim && $id != $p->id) {
                     return view('/periodos/edit', ['erro' => "O período '$p->nome' já abrange estas datas!", 'periodo' => $periodo]);
                 }
             }

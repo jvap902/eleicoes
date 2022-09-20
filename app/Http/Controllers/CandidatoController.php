@@ -19,9 +19,7 @@ class CandidatoController extends Controller
                case 4: $c->cargo = "Deputado Federal"; break;
                case 5: $c->cargo = "Deputado Estadual"; break;
            }
-
         }
-
         return view('candidatos.index', [
             'candidatos' => $candidatos
         ]);

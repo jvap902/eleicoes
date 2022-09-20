@@ -1,6 +1,6 @@
 @extends ('base.index')
 
-@section('container')
+<div class="mx-auto" style="width: 40%;" id="create">
     <form action='/candidatos/update' method='POST'>
         <input type='hidden' name='_token' value='{{ csrf_token() }}' />
 
@@ -25,7 +25,7 @@
             'selected' => $candidato->periodo_id,
 
         ])
-        
+
         @include('components.field', [
             'classe' => 'mb-3',
             'type' => 'text',
@@ -74,4 +74,4 @@
         <a href="/candidatos" class="btn btn-danger">Voltar</a>
         @include('components.button', ['type' => 'submit', 'color' => 'success', 'value' => '', 'text' => 'Continuar'])
         </form>
-@endsection
+</div>
