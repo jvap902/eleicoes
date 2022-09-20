@@ -38,14 +38,20 @@ class CandidatoController extends Controller
         $data = $request->all();
         unset($data['_token']);
         $candidatos = DB::table('candidatos')->select('numero', 'periodo_id')->get();
-        if($data['nome'] && $data['periodo_id'] && $data['partido'] && $data['numero']){
-            foreach($candidatos as $c){
-                if($c->numero == $data['numero'] && $c->periodo_id == $data['periodo_id']){
-                    return view('/candidatos/create', ['erro' => "Este número já está cadastrado neste período!",'periodos' => $periodos,'cargos' => $cargos]);
+                
+        if($data['nome'] && $data['periodo_id'] && $data['partido'] && isset($data['numero'])){
+            if ($data['numero'] > 0){
+                foreach($candidatos as $c){
+                    if($c->numero == $data['numero'] && $c->periodo_id == $data['periodo_id']){
+                        return view('/candidatos/create', ['erro' => "Este número já está cadastrado neste período!",'periodos' => $periodos,'cargos' => $cargos]);
+                    }
                 }
+                DB::table('candidatos')->insert($data);
+                return redirect('/candidatos');
             }
-            DB::table('candidatos')->insert($data);
-            return redirect('/candidatos');
+            else{
+                return view('/candidatos/create', ['erro' => "O número cadastrado é inválido", 'periodos' => $periodos, 'cargos' => $cargos]);
+            }
         }else{
             return view('/candidatos/create', ['erro' => "Preencha todos os campos", 'periodos' => $periodos, 'cargos' => $cargos]);
         }
@@ -95,9 +101,37 @@ class CandidatoController extends Controller
         unset($data['_token']);
         $id = array_shift($data);
 
-        DB::table('candidatos')->where('id', $id)->update($data);
+        $candidato = DB::table('candidatos')->find($id);
+        $periodos = DB::table('periodos')->select()->get();
 
-        return redirect('/candidatos');
+        $nomes = ['Presidente', 'Governador', 'Senador', 'Deputado Federal', 'Deputado Estadual'];
+
+        $cargos = [];
+        foreach($nomes as $nome) {
+            $cargo = new \stdClass;
+            $cargo->id = count($cargos) + 1;
+            $cargo->nome = $nome;
+            $cargos[] = $cargo;
+        }
+
+        $candidatos = DB::table('candidatos')->select('numero', 'periodo_id')->where('id', '!=' , $id)->get();
+                
+        if($data['nome'] && $data['periodo_id'] && $data['partido'] && isset($data['numero'])){
+            if ($data['numero'] > 0){
+                foreach($candidatos as $c){
+                    if($c->numero == $data['numero'] && $c->periodo_id == $data['periodo_id']){
+                        return view('/candidatos/edit', ['erro' => "Este número já está cadastrado neste período!",'periodos' => $periodos,'cargos' => $cargos, 'candidato' => $candidato]);
+                    }
+                }
+                DB::table('candidatos')->where('id', $id)->update($data);
+                return redirect('/candidatos');
+            }
+            else{
+                return view('/candidatos/edit', ['erro' => "O número cadastrado é inválido", 'periodos' => $periodos, 'cargos' => $cargos, 'candidato' => $candidato]);
+            }
+        }else{
+            return view('/candidatos/edit', ['erro' => "Preencha todos os campos", 'periodos' => $periodos, 'cargos' => $cargos, 'candidato' => $candidato]);
+        }
     }
 
     function destroy($id){
