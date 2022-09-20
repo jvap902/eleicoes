@@ -115,14 +115,23 @@ class PeriodoController extends Controller
     {
         $data = $request->all();
         unset($data['_token']);
-
         $id = array_shift($data);
-
-        DB::table('periodos')
+        $periodo = DB::table('periodos')->find($id);
+        $periodos = DB::table('periodos')->get();
+        if ($data['nome'] && $data['data_inicio'] && $data['data_fim']) {
+            foreach ($periodos as $p) {
+                if ($data['data_inicio'] >= $p->data_inicio && $data['data_fim'] <= $p->data_fim) {
+                    return view('/periodos/edit', ['erro' => "O período '$p->nome' já abrange estas datas!", 'periodo' => $periodo]);
+                }
+            }
+            DB::table('periodos')
             ->where('id', $id)
             ->update($data);
 
         return redirect('/periodos');
+        } else{
+            return view('/periodos/edit', ['erro' => "Preencha todos os campos", 'periodo' => $periodo]);
+        }
     }
 
     function destroy($id)

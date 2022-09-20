@@ -1,7 +1,7 @@
 @extends('base.index')
 
 <div  class="mx-auto" style="width: 40%;">
-    <a href="/" style="text-decoration:none" class="btn d-grid gap-2 col-6 mx-auto" id="btn">Voltar<a>
+    <a href="/votos/" style="text-decoration:none" class="btn d-grid gap-2 col-6 mx-auto" id="btn">Voltar<a>
 </div>
 
 @foreach($periodos as $k => $p)

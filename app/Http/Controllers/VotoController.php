@@ -40,8 +40,6 @@ class VotoController extends Controller
         }
         $periodo = $request->session()->get('periodo');
 
-        // print_r($periodo);
-        // die;
 
         $presidente = DB::table('candidatos')->where('numero', "=", $data['presidente'])->where('cargo', "=", 1)->where('periodo_id', "=", $periodo)->get();
         $governador = DB::table('candidatos')->where('numero', $data['governador'])->where('cargo', "=", 2)->where('periodo_id', "=", $periodo)->get();
@@ -103,8 +101,6 @@ class VotoController extends Controller
         $eleitor = DB::table('eleitores')->where('titulo', $titulo)->select('id')->first();
         $periodo = DB::table('periodos')->whereRaw("data_inicio < '$date'")->whereRaw("data_fim > '$date'")->select('id')->first();
 
-        // print_r($periodo->id);
-        // die;
         DB::beginTransaction();
 
         try {
