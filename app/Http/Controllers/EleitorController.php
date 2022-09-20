@@ -52,14 +52,26 @@ class EleitorController extends Controller
     function update(Request $request){
         $data = $request->all();
         unset($data['_token']);
-
         $id = array_shift($data);
 
-        DB::table('eleitores')
-        ->where('id', $id)
-        ->update($data);
+        $eleitor = DB::table('eleitores')
+        ->find($id);
 
-        return redirect('/eleitores');
+        $titulos = DB::table('eleitores')->select('titulo')->where('id', "!=", $id)->get();
+        if($data['nome'] && $data['titulo'] && $data['zona'] && $data['secao']){
+            foreach($titulos as $t){
+                if($t->titulo == $data['titulo']){
+                    return view('/eleitores/edit', ['erro' => "Este título já está registrado", 'eleitor' => $eleitor]);
+                }
+            }
+            DB::table('eleitores')
+                ->where('id', $id)
+                ->update($data);
+        
+                return redirect('/eleitores');
+        }else{
+            return view('/eleitores/edit', ['erro' => "Preencha todos os campos", 'eleitor' => $eleitor]);
+        }
     }
 
     function destroy($id){
