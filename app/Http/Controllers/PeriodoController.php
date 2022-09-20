@@ -147,6 +147,10 @@ class PeriodoController extends Controller
                 ->select()
                 ->orderby('data_inicio', 'DESC')
                 ->get();
+                foreach ($periodos as $periodo) {
+                    $periodo->data_inicio = Carbon::parse($periodo->data_inicio)->format('d/m/Y H:i');
+                    $periodo->data_fim = Carbon::parse($periodo->data_fim)->format('d/m/Y H:i');
+                }
             return view('/periodos.index', ['periodos' => $periodos, 'erro' => "Este período não pode ser excluído."]);
         }
     }

@@ -1,6 +1,7 @@
 @extends('base.index_comprovante')
 
-@if (isset($confirma))
+<div class="mx-auto" style="width: 40%;" id="create">
+    @if (isset($confirma))
         <div id ="recado" class="alert alert-success">
             {{ $confirma }}
         </div>
@@ -8,4 +9,5 @@
         <div id="recado" class="alert alert-danger">
             {{ $erro }}
         </div>
-        @endif
+    @endif
+<div>
