@@ -37,12 +37,12 @@ class CandidatoController extends Controller
         }
         $data = $request->all();
         unset($data['_token']);
-        $candidatos = DB::table('candidatos')->select('numero', 'periodo_id')->get();
+        $candidatos = DB::table('candidatos')->select('numero', 'periodo_id', 'cargo')->get();
                 
         if($data['nome'] && $data['periodo_id'] && $data['partido'] && isset($data['numero'])){
             if ($data['numero'] > 0){
                 foreach($candidatos as $c){
-                    if($c->numero == $data['numero'] && $c->periodo_id == $data['periodo_id']){
+                    if($c->numero == $data['numero'] && $c->periodo_id == $data['periodo_id'] && $c->cargo == $data['cargo']){
                         return view('/candidatos/create', ['erro' => "Este número já está cadastrado neste período!",'periodos' => $periodos,'cargos' => $cargos]);
                     }
                 }
@@ -114,12 +114,12 @@ class CandidatoController extends Controller
             $cargos[] = $cargo;
         }
 
-        $candidatos = DB::table('candidatos')->select('numero', 'periodo_id')->where('id', '!=' , $id)->get();
+        $candidatos = DB::table('candidatos')->select('numero', 'periodo_id', 'cargo')->where('id', '!=' , $id)->get();
                 
         if($data['nome'] && $data['periodo_id'] && $data['partido'] && isset($data['numero'])){
             if ($data['numero'] > 0){
                 foreach($candidatos as $c){
-                    if($c->numero == $data['numero'] && $c->periodo_id == $data['periodo_id']){
+                    if($c->numero == $data['numero'] && $c->periodo_id == $data['periodo_id'] && $c->cargo == $data['cargo']){
                         return view('/candidatos/edit', ['erro' => "Este número já está cadastrado neste período!",'periodos' => $periodos,'cargos' => $cargos, 'candidato' => $candidato]);
                     }
                 }
