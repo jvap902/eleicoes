@@ -50,7 +50,7 @@ class PeriodoController extends Controller
             }
             DB::table('periodos')->insert($data);
 
-            $periodo_id = DB::table('periodos')->where('data_inicio', '=', $inicio)->get();
+            $periodo_id = DB::table('periodos')->where('data_inicio', '=', $data['data_inicio'])->get();
 
             DB::table('candidatos')->insert(
                 array(
