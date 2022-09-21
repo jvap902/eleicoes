@@ -43,61 +43,65 @@ class PeriodoController extends Controller
         if ($data['nome'] && $data['data_inicio'] && $data['data_fim']) {
             $inicio = Carbon::parse($data['data_inicio'])->setTimezone('America/Rosario')->format('Y-m-d H:i:s');
             $fim = Carbon::parse($data['data_fim'])->setTimezone('America/Rosario')->format('Y-m-d H:i:s');
-            foreach ($periodos as $p) {
-                if ($inicio <= $p->data_fim && $fim >= $p->data_inicio) {
-                    return view('/periodos/create', ['erro' => "O período '$p->nome' já abrange estas datas!"]);
+            if($fim > $inicio){
+                foreach ($periodos as $p) {
+                    if ($inicio <= $p->data_fim && $fim >= $p->data_inicio) {
+                        return view('/periodos/create', ['erro' => "O período '$p->nome' já abrange estas datas!"]);
+                    }
                 }
+                DB::table('periodos')->insert($data);
+
+                $periodo_id = DB::table('periodos')->where('data_inicio', '=', $data['data_inicio'])->get();
+
+                DB::table('candidatos')->insert(
+                    array(
+                        'nome' => "Nulo/Branco",
+                        'cargo' => 1,
+                        'partido' => '',
+                        'numero' => 0,
+                        'periodo_id' => $periodo_id[0]->id
+                    )
+                );
+                DB::table('candidatos')->insert(
+                    array(
+                        'nome' => "Nulo/Branco",
+                        'cargo' => 2,
+                        'partido' => '',
+                        'numero' => 0,
+                        'periodo_id' => $periodo_id[0]->id
+                    )
+                );
+                DB::table('candidatos')->insert(
+                    array(
+                        'nome' => "Nulo/Branco",
+                        'cargo' => 3,
+                        'partido' => '',
+                        'numero' => 0,
+                        'periodo_id' => $periodo_id[0]->id
+                    )
+                );
+                DB::table('candidatos')->insert(
+                    array(
+                        'nome' => "Nulo/Branco",
+                        'cargo' => 4,
+                        'partido' => '',
+                        'numero' => 0,
+                        'periodo_id' => $periodo_id[0]->id
+                    )
+                );
+                DB::table('candidatos')->insert(
+                    array(
+                        'nome' => "Nulo/Branco",
+                        'cargo' => 5,
+                        'partido' => '',
+                        'numero' => 0,
+                        'periodo_id' => $periodo_id[0]->id
+                    )
+                );
+                return redirect('/periodos');
+            }else{
+                return view('/periodos/create', ['erro' => "As datas não são consistentes"]);
             }
-            DB::table('periodos')->insert($data);
-
-            $periodo_id = DB::table('periodos')->where('data_inicio', '=', $data['data_inicio'])->get();
-
-            DB::table('candidatos')->insert(
-                array(
-                    'nome' => "Nulo/Branco",
-                    'cargo' => 1,
-                    'partido' => '',
-                    'numero' => 0,
-                    'periodo_id' => $periodo_id[0]->id
-                )
-            );
-            DB::table('candidatos')->insert(
-                array(
-                    'nome' => "Nulo/Branco",
-                    'cargo' => 2,
-                    'partido' => '',
-                    'numero' => 0,
-                    'periodo_id' => $periodo_id[0]->id
-                )
-            );
-            DB::table('candidatos')->insert(
-                array(
-                    'nome' => "Nulo/Branco",
-                    'cargo' => 3,
-                    'partido' => '',
-                    'numero' => 0,
-                    'periodo_id' => $periodo_id[0]->id
-                )
-            );
-            DB::table('candidatos')->insert(
-                array(
-                    'nome' => "Nulo/Branco",
-                    'cargo' => 4,
-                    'partido' => '',
-                    'numero' => 0,
-                    'periodo_id' => $periodo_id[0]->id
-                )
-            );
-            DB::table('candidatos')->insert(
-                array(
-                    'nome' => "Nulo/Branco",
-                    'cargo' => 5,
-                    'partido' => '',
-                    'numero' => 0,
-                    'periodo_id' => $periodo_id[0]->id
-                )
-            );
-            return redirect('/periodos');
         } else {
             return view('/periodos/create', ['erro' => "Preencha todos os campos"]);
         }
@@ -130,6 +134,7 @@ class PeriodoController extends Controller
         if ($data['nome'] && $data['data_inicio'] && $data['data_fim']) {
             $inicio = Carbon::parse($data['data_inicio'])->setTimezone('America/Rosario')->format('Y-m-d H:i:s');
             $fim = Carbon::parse($data['data_fim'])->setTimezone('America/Rosario')->format('Y-m-d H:i:s');
+            if($fim > $inicio){
             foreach ($periodos as $p) {
                 if ($inicio <= $p->data_fim && $fim >= $p->data_inicio && $p->id != $id) {
                     return view('/periodos/edit', ['erro' => "O período '$p->nome' já abrange estas datas!", 'periodo' => $periodo]);
@@ -139,7 +144,10 @@ class PeriodoController extends Controller
             ->where('id', $id)
             ->update($data);
 
-        return redirect('/periodos');
+            return redirect('/periodos');
+        }else{
+            return view('/periodos/edit', ['erro' => "As datas não são consistentes", 'periodo' => $periodo]);
+        }
         } else{
             return view('/periodos/edit', ['erro' => "Preencha todos os campos", 'periodo' => $periodo]);
         }
