@@ -41,14 +41,16 @@ class PeriodoController extends Controller
         unset($data['_token']);
         $periodos = DB::table('periodos')->get();
         if ($data['nome'] && $data['data_inicio'] && $data['data_fim']) {
+            $inicio = Carbon::parse($data['data_inicio'])->setTimezone('America/Rosario')->format('Y-m-d H:i:s');
+            $fim = Carbon::parse($data['data_fim'])->setTimezone('America/Rosario')->format('Y-m-d H:i:s');
             foreach ($periodos as $p) {
-                if ($data['data_inicio'] <= $p->data_fim && $data['data_fim'] >= $p->data_inicio) {
+                if ($inicio <= $p->data_fim && $fim >= $p->data_inicio) {
                     return view('/periodos/create', ['erro' => "O período '$p->nome' já abrange estas datas!"]);
                 }
             }
             DB::table('periodos')->insert($data);
 
-            $periodo_id = DB::table('periodos')->where('data_inicio', '=', $data['data_inicio'])->get();
+            $periodo_id = DB::table('periodos')->where('data_inicio', '=', $inicio)->get();
 
             DB::table('candidatos')->insert(
                 array(
@@ -126,8 +128,10 @@ class PeriodoController extends Controller
         $periodo = DB::table('periodos')->find($id);
         $periodos = DB::table('periodos')->get();
         if ($data['nome'] && $data['data_inicio'] && $data['data_fim']) {
+            $inicio = Carbon::parse($data['data_inicio'])->setTimezone('America/Rosario')->format('Y-m-d H:i:s');
+            $fim = Carbon::parse($data['data_fim'])->setTimezone('America/Rosario')->format('Y-m-d H:i:s');
             foreach ($periodos as $p) {
-                if ($data['data_inicio'] <= $p->data_fim && $data['data_fim'] >= $p->data_inicio && $p->id != $id) {
+                if ($inicio <= $p->data_fim && $fim >= $p->data_inicio && $p->id != $id) {
                     return view('/periodos/edit', ['erro' => "O período '$p->nome' já abrange estas datas!", 'periodo' => $periodo]);
                 }
             }
