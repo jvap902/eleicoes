@@ -32,7 +32,7 @@ class EleitorController extends Controller
                     return view('/eleitores/create', ['erro' => "Este título já está registrado"]);
                 }
             }
-            if(strlen($data['titulo']) != 12){
+            if(strlen($data['titulo']) != 12 && $data['titulo'] > 0){
                 return view('/eleitores/create', ['erro' => "Este título não é válido!"]);
             }
             DB::table('eleitores')->insert($data);
@@ -67,13 +67,13 @@ class EleitorController extends Controller
                     return view('/eleitores/edit', ['erro' => "Este título já está registrado", 'eleitor' => $eleitor]);
                 }
             }
-            if(strlen($data['titulo']) != 12){
+            if(strlen($data['titulo']) != 12 && $data['titulo'] > 0){
                 return view('/eleitores/edit', ['erro' => "Este título não é válido!", 'eleitor' => $eleitor]);
             }
             DB::table('eleitores')
                 ->where('id', $id)
                 ->update($data);
-        
+
                 return redirect('/eleitores');
         }else{
             return view('/eleitores/edit', ['erro' => "Preencha todos os campos", 'eleitor' => $eleitor]);
