@@ -103,8 +103,15 @@ class PeriodoController extends Controller
 
     function edit($id)
     {
-        $periodo = DB::table('periodos')
-            ->find($id);
+        $periodo = DB::table('periodos')->find($id);
+        $votos = DB::table('votos')->get();
+
+        foreach($votos as $v){
+            if($v->data >= $periodo->data_inicio && $v->data <= $periodo->data_fim){
+                $periodos = DB::table('periodos')->get();
+                return view('/periodos.index', ['periodos' => $periodos, 'erro' => "Este período não pode ser alterado."]);
+            }
+        }
 
         return view('periodos.edit', [
             'periodo' => $periodo
@@ -120,7 +127,7 @@ class PeriodoController extends Controller
         $periodos = DB::table('periodos')->get();
         if ($data['nome'] && $data['data_inicio'] && $data['data_fim']) {
             foreach ($periodos as $p) {
-                if ($data['data_inicio'] <= $p->data_fim && $data['data_fim'] >= $p->data_inicio) {
+                if ($data['data_inicio'] <= $p->data_fim && $data['data_fim'] >= $p->data_inicio && $p->id != $id) {
                     return view('/periodos/edit', ['erro' => "O período '$p->nome' já abrange estas datas!", 'periodo' => $periodo]);
                 }
             }
@@ -136,22 +143,20 @@ class PeriodoController extends Controller
 
     function destroy($id)
     {
-        try {
-            DB::table('periodos')
-                ->where('id', $id)
-                ->delete();
-
-            return redirect('/periodos');
-        } catch (Exception $e) {
-            $periodos = DB::table('periodos')
-                ->select()
-                ->orderby('data_inicio', 'DESC')
-                ->get();
+        $periodo = DB::table('periodos')->find($id);
+        $votos = DB::table('votos')->get();
+        foreach($votos as $v){
+            if($v->data >= $periodo->data_inicio && $v->data <= $periodo->data_fim){
+                $periodos = DB::table('periodos')->select()->orderby('data_inicio', 'DESC')->get();
                 foreach ($periodos as $periodo) {
                     $periodo->data_inicio = Carbon::parse($periodo->data_inicio)->format('d/m/Y H:i');
                     $periodo->data_fim = Carbon::parse($periodo->data_fim)->format('d/m/Y H:i');
                 }
-            return view('/periodos.index', ['periodos' => $periodos, 'erro' => "Este período não pode ser excluído."]);
+                return view('/periodos.index', ['periodos' => $periodos, 'erro' => "Este período não pode ser excluído."]);
+            }
         }
+        DB::table('candidatos')->where([['numero', '=', 0], ['periodo_id', '=', $id]])->delete();
+        DB::table('periodos')->where('id', $id)->delete();
+        return redirect('/periodos');
     }
 }
