@@ -32,6 +32,9 @@ class EleitorController extends Controller
                     return view('/eleitores/create', ['erro' => "Este título já está registrado"]);
                 }
             }
+            if(strlen($data['titulo']) != 12){
+                return view('/eleitores/create', ['erro' => "Este título não é válido!"]);
+            }
             DB::table('eleitores')->insert($data);
 
             return redirect('/eleitores');
@@ -63,6 +66,9 @@ class EleitorController extends Controller
                 if($t->titulo == $data['titulo']){
                     return view('/eleitores/edit', ['erro' => "Este título já está registrado", 'eleitor' => $eleitor]);
                 }
+            }
+            if(strlen($data['titulo']) != 12){
+                return view('/eleitores/edit', ['erro' => "Este título não é válido!", 'eleitor' => $eleitor]);
             }
             DB::table('eleitores')
                 ->where('id', $id)
