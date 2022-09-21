@@ -35,7 +35,7 @@
 
         @include('components.field', [
             'classe' => 'mb-3',
-            'type' => 'number',
+            'type' => 'text',
             'id' => 'titulo',
             'name' => 'titulo',
             'label' => 'Título',

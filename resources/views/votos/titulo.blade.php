@@ -10,7 +10,7 @@
         <input type='hidden' name='_token' value='{{ csrf_token() }}' />
         @include('components.field', [
             'classe' => 'mb-3',
-            'type' => 'number',
+            'type' => 'text',
             'id' => 'titulo',
             'name' => 'titulo',
             'label' => 'Título',
