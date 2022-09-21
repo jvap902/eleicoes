@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class CandidatoController extends Controller
 {
     function index() {
-        $candidatos = DB::table('candidatos')->select('periodos.nome as periodo_id', 'candidatos.nome as nome', 'candidatos.partido as partido', 'candidatos.numero as numero', 'candidatos.cargo as cargo', 'candidatos.id as id')->leftjoin('periodos', 'candidatos.periodo_id', '=', 'periodos.id')->where('candidatos.numero', '>', '0')->get();
+        $candidatos = DB::table('candidatos')->select('periodos.nome as periodo_id', 'candidatos.nome as nome', 'candidatos.partido as partido', 'candidatos.numero as numero', 'candidatos.cargo as cargo', 'candidatos.id as id')->leftjoin('periodos', 'candidatos.periodo_id', '=', 'periodos.id')->where('candidatos.numero', '>', '0')->orderby('candidatos.cargo')->get();
         foreach($candidatos as $c){
            switch($c->cargo){
                case 1: $c->cargo = "Presidente"; break;
